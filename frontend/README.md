@@ -24,6 +24,18 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
+## Dev Tools
+This project uses [shadcn/ui](https://ui.shadcn.com/docs/components/) as its component library. To add new components, just run
+```bash
+bunx shadcn-ui@latest add <component name>
+```
+
+If you're lazy like me, you can alias the "bunx shadcn-ui@latest" to something like "shadcn". To do that, just add 
+```bash
+alias shadcn="bunx shadcn-ui@latest"
+```
+to your ~/.bashrc.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
