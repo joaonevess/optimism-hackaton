@@ -74,3 +74,11 @@
     @apply bg-background text-foreground;
   }
 }
+/* To prevent full-screen breaking when addons inject elements*/
+.main-div > * {
+  display: none;
+}
+
+.main-div-auth-child{
+  display: block;
+}
