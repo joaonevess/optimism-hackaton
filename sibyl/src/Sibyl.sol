@@ -1,7 +1,11 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.13;
 
-contract Sibyl {
+import "@openzeppelin/contracts/access/Ownable.sol";
+
+contract Sibyl is Ownable {
+    constructor(address initialOwner) Ownable(initialOwner) {}
+
     event QueryRequest(uint256 requestId, Query query);
     event QueryResponse(uint256 requestId, bytes response);
 
@@ -18,9 +22,9 @@ contract Sibyl {
     }
 
     enum AIModel {
-        GPT3,
-        GPT4,
         Gemini,
+        GPT4,
+        GPT3,
         Claude
     }
 
@@ -38,7 +42,17 @@ contract Sibyl {
     function respond(uint256 requestId, bytes memory response) external {
         require(oracleDataProviders[msg.sender], "Unknown data provider");
         require(pendingRequests[requestId], "Request is not pending");
+
         pendingRequests[requestId] = false;
         emit QueryResponse(requestId, response);
+    }
+
+    // Management
+    function addDataProvider(address dataProvider) external onlyOwner {
+        oracleDataProviders[dataProvider] = true;
+    }
+
+    function removeDataProvider(address dataProvider) external onlyOwner {
+        delete oracleDataProviders[dataProvider];
     }
 }
