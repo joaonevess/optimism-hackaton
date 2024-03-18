@@ -6,6 +6,10 @@ Install Bun by running
 ```bash
 curl -fsSL https://bun.sh/install | bash
 
+Then install all dependencies by running
+```bash
+bun install
+
 First, run the development server:
 
 ```bash
