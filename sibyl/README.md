@@ -15,6 +15,12 @@ https://book.getfoundry.sh/
 
 ## Usage
 
+### Requirements
+Install foundryup through:
+```shell
+$ curl -L https://foundry.paradigm.xyz | bash
+```
+
 ### Build
 
 ```shell
@@ -49,6 +55,12 @@ $ anvil
 
 ```shell
 $ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
+```
+
+### REPL
+
+```shell
+$ chisel
 ```
 
 ### Cast
