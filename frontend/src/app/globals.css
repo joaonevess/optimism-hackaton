@@ -79,6 +79,10 @@
   display: none;
 }
 
+body > * {
+  display: none;
+}
+
 .main-div-auth-child{
   display: block;
 }
