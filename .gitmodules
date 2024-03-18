@@ -1,3 +1,6 @@
 [submodule "sibyl/lib/forge-std"]
 	path = sibyl/lib/forge-std
 	url = https://github.com/foundry-rs/forge-std
+[submodule "sibyl/lib/openzeppelin-contracts"]
+	path = sibyl/lib/openzeppelin-contracts
+	url = https://github.com/OpenZeppelin/openzeppelin-contracts
