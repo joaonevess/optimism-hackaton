@@ -71,6 +71,27 @@ contract Sibyl is AccessControl, Pausable {
         return requestId;
     }
 
+    function readResponse(
+        uint256 requestId
+    ) public view returns (Response memory) {
+        require(requestId < requestCounter, "Sibyl: Request does not exist");
+
+        require(
+            requests[requestId].status == RequestStatus.Responded,
+            "Sibyl: Request is not responded or has failed"
+        );
+
+        return requests[requestId].response;
+    }
+
+    function getQueryStatus(
+        uint256 requestId
+    ) public view returns (RequestStatus) {
+        require(requestId < requestCounter, "Sibyl: Request does not exist");
+
+        return requests[requestId].status;
+    }
+
     // Data provider functionality
     function fulfillRequest(
         uint256 requestId,
