@@ -1,13 +1,12 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.13;
 
-import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/access/AccessControl.sol";
+import "@openzeppelin/contracts/utils/Pausable.sol";
 
-contract Sibyl is Ownable {
-    constructor(address initialOwner) Ownable(initialOwner) {}
-
+contract Sibyl is AccessControl, Pausable {
     event QueryRequest(uint256 requestId, Query query);
-    event QueryResponse(uint256 requestId, bytes response);
+    event QueryResponse(uint256 requestId, bool success, bytes response);
 
     struct Query {
         string question;
@@ -28,31 +27,74 @@ contract Sibyl is Ownable {
         Claude
     }
 
-    uint256 private requestCounter;
-    mapping(address => bool) private oracleDataProviders;
-    mapping(uint256 => bool) private pendingRequests;
+    enum RequestStatus {
+        Pending,
+        Responded,
+        Failed
+    }
 
+    uint256 private requestCounter;
+    mapping(uint256 => RequestStatus) private requestStatus;
+
+    // Public
     function query(Query calldata queryData) public returns (uint256) {
         uint256 requestId = requestCounter++;
-        pendingRequests[requestId] = true;
+        requestStatus[requestId] = RequestStatus.Pending;
         emit QueryRequest(requestId, queryData);
         return requestId;
     }
 
-    function respond(uint256 requestId, bytes memory response) external {
-        require(oracleDataProviders[msg.sender], "Unknown data provider");
-        require(pendingRequests[requestId], "Request is not pending");
+    // Data provider
+    function respond(
+        uint256 requestId,
+        bytes calldata response
+    ) public onlyRole(DATA_PROVIDER_ROLE) {
+        require(
+            requestStatus[requestId] == RequestStatus.Pending,
+            "Request is not pending"
+        );
 
-        pendingRequests[requestId] = false;
-        emit QueryResponse(requestId, response);
+        requestStatus[requestId] = RequestStatus.Responded;
+        emit QueryResponse(requestId, true, response);
+    }
+
+    function markRequestAsFailed(
+        uint256 requestId
+    ) public onlyRole(DATA_PROVIDER_ROLE) {
+        require(
+            requestStatus[requestId] == RequestStatus.Pending,
+            "Request is not pending"
+        );
+
+        requestStatus[requestId] = RequestStatus.Failed;
+        emit QueryResponse(requestId, false, "");
     }
 
     // Management
-    function addDataProvider(address dataProvider) external onlyOwner {
-        oracleDataProviders[dataProvider] = true;
+    constructor(address defaultAdmin) {
+        _grantRole(DEFAULT_ADMIN_ROLE, defaultAdmin);
     }
 
-    function removeDataProvider(address dataProvider) external onlyOwner {
-        delete oracleDataProviders[dataProvider];
+    bytes32 public constant DATA_PROVIDER_ROLE =
+        keccak256("DATA_PROVIDER_ROLE");
+
+    function registerDataProvider(
+        address _newProvider
+    ) public onlyRole(DEFAULT_ADMIN_ROLE) {
+        _grantRole(DATA_PROVIDER_ROLE, _newProvider);
+    }
+
+    function removeDataProvider(
+        address _provider
+    ) public onlyRole(DEFAULT_ADMIN_ROLE) {
+        _revokeRole(DATA_PROVIDER_ROLE, _provider);
+    }
+
+    function pause() public onlyRole(DEFAULT_ADMIN_ROLE) {
+        _pause();
+    }
+
+    function unpause() public onlyRole(DEFAULT_ADMIN_ROLE) {
+        _unpause();
     }
 }
