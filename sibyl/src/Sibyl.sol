@@ -6,7 +6,7 @@ import "@openzeppelin/contracts/utils/Pausable.sol";
 
 contract Sibyl is AccessControl, Pausable {
     event QueryRequest(uint256 requestId, Query query);
-    event QueryResponse(uint256 requestId, bool success, bytes response);
+    event QueryResponse(uint256 requestId, Response response);
 
     struct Query {
         string question;
@@ -17,7 +17,8 @@ contract Sibyl is AccessControl, Pausable {
     enum ResponseType {
         Bool,
         Int,
-        String
+        String,
+        Error
     }
 
     enum AIModel {
@@ -33,10 +34,17 @@ contract Sibyl is AccessControl, Pausable {
         Failed
     }
 
+    struct Response {
+        ResponseType responseType;
+        uint256 integerResponse;
+        string stringResponse;
+        bool boolResponse;
+    }
+
     uint256 private requestCounter;
     mapping(uint256 => RequestStatus) private requestStatus;
 
-    // Public
+    // Public functionality
     function query(Query calldata queryData) public returns (uint256) {
         uint256 requestId = requestCounter++;
         requestStatus[requestId] = RequestStatus.Pending;
@@ -44,10 +52,10 @@ contract Sibyl is AccessControl, Pausable {
         return requestId;
     }
 
-    // Data provider
+    // Data provider functionality
     function respond(
         uint256 requestId,
-        bytes calldata response
+        Response calldata response
     ) public onlyRole(DATA_PROVIDER_ROLE) {
         require(
             requestStatus[requestId] == RequestStatus.Pending,
@@ -55,7 +63,7 @@ contract Sibyl is AccessControl, Pausable {
         );
 
         requestStatus[requestId] = RequestStatus.Responded;
-        emit QueryResponse(requestId, true, response);
+        emit QueryResponse(requestId, response);
     }
 
     function markRequestAsFailed(
@@ -67,10 +75,13 @@ contract Sibyl is AccessControl, Pausable {
         );
 
         requestStatus[requestId] = RequestStatus.Failed;
-        emit QueryResponse(requestId, false, "");
+        emit QueryResponse(
+            requestId,
+            Response(ResponseType.Error, 0, "", false)
+        );
     }
 
-    // Management
+    // Admin functionality
     constructor(address defaultAdmin) {
         _grantRole(DEFAULT_ADMIN_ROLE, defaultAdmin);
     }
