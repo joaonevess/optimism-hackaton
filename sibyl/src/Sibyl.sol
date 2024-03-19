@@ -101,10 +101,20 @@ contract Sibyl is AccessControl, Pausable {
     }
 
     // Data provider functionality
+    bytes32 public constant DATA_PROVIDER_ROLE =
+        keccak256("DATA_PROVIDER_ROLE");
+    modifier onlyDataProvider() {
+        require(
+            hasRole(DATA_PROVIDER_ROLE, msg.sender),
+            "Sibyl: Only data provider can call this function"
+        );
+        _;
+    }
+
     function fulfillRequest(
         uint256 requestId,
         Response calldata response
-    ) public onlyRole(DATA_PROVIDER_ROLE) whenNotPaused {
+    ) public onlyDataProvider whenNotPaused {
         require(
             requests[requestId].status == RequestStatus.Pending,
             "Sibyl: Request is not Pending"
@@ -117,7 +127,7 @@ contract Sibyl is AccessControl, Pausable {
 
     function cancelPendingRequest(
         uint256 requestId
-    ) public onlyRole(DATA_PROVIDER_ROLE) whenNotPaused {
+    ) public onlyDataProvider whenNotPaused {
         require(
             requests[requestId].status == RequestStatus.Pending,
             "Sibyl: Request is not pending"
@@ -129,10 +139,7 @@ contract Sibyl is AccessControl, Pausable {
     }
 
     // Admin functionality
-
     address payable public adminAddress;
-    bytes32 public constant DATA_PROVIDER_ROLE =
-        keccak256("DATA_PROVIDER_ROLE");
     constructor() {
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
         adminAddress = payable(msg.sender);
@@ -142,7 +149,7 @@ contract Sibyl is AccessControl, Pausable {
     modifier onlyAdmin() {
         require(
             hasRole(DEFAULT_ADMIN_ROLE, msg.sender),
-            "Only admin can call this function"
+            "Sibyl: Only admin can call this function"
         );
         _;
     }
@@ -162,19 +169,19 @@ contract Sibyl is AccessControl, Pausable {
         uint256 amount = address(this).balance;
 
         (bool success, ) = adminAddress.call{value: amount}("");
-        require(success, "Failed to send Ether");
+        require(success, "Sibyl: Failed to send Ether");
     }
 
     // Function to withdraw a specific amount of Ether from this contract to the admin
     function withdraw(uint256 _amount) public onlyAdmin {
         (bool success, ) = adminAddress.call{value: _amount}("");
-        require(success, "Failed to send Ether");
+        require(success, "Sibyl: Failed to send Ether");
     }
 
     // Function to send Ether from this contract to an arbitrary address
     function sendEther(address payable _to, uint256 _amount) public onlyAdmin {
         (bool success, ) = _to.call{value: _amount}("");
-        require(success, "Failed to send Ether");
+        require(success, "Sibyl: Failed to send Ether");
     }
 
     event DataProviderRegistered(address provider);
