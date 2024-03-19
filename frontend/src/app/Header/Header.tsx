@@ -1,14 +1,18 @@
+import { ethers } from "ethers";
 import ConnectWalletButton from "./ConnectWalletButton";
 
-export default function Header({className} : {className: string}) {
+interface HeaderProps {
+    className: string
+    setSigner: (signer: ethers.JsonRpcSigner | undefined) => void
+    hasWallet: boolean
+    signer: ethers.JsonRpcSigner | undefined
+}
 
-
+export default function Header({className, setSigner, hasWallet, signer} : HeaderProps) {
     return (
         <header className={`${className} flex-row flex-nowrap justify-between w-full px-10 py-5`}>
             <div>Logo</div>
-            {/* <div>Test2</div> */}
-            <ConnectWalletButton/>
+            <ConnectWalletButton setSigner={setSigner} hasWallet={hasWallet} signer={signer}/>
         </header>
     )
-
 }

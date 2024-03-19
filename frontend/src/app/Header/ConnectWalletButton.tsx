@@ -1,24 +1,23 @@
-"use client"
-
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { JsonRpcSigner, ethers } from "ethers";
+import { Dispatch, SetStateAction, useState } from "react";
+
+export interface ConnectWalletButtonProps {
+    setSigner: (signer: ethers.JsonRpcSigner | undefined) => void
+    hasWallet: boolean
+    signer: ethers.JsonRpcSigner | undefined
+}
 
 
-export default function ConnectWalletButton(){
-    const [isConnected, setIsConnected] = useState(false)
-    const [address, setAddress] = useState('')
-    const [hasWallet, setHasWallet] = useState(false)
-    
-    // window.ethereum will exis if user has EIP-1193 wallet installed
-    if (window.ethereum && !hasWallet) {
-        setHasWallet(true)
-    }
+export default function ConnectWalletButton({setSigner, hasWallet, signer} : ConnectWalletButtonProps){
 
     const connectWallet = async () => {
         try {
-            const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-            setAddress(accounts[0])
-            setIsConnected(true)
+            const provider = new ethers.BrowserProvider(window.ethereum)
+            provider.getSigner().then((providedSigner) => {
+                setSigner(providedSigner)
+            })
+
         } catch (error) {
             console.error(error)
         }
@@ -26,7 +25,7 @@ export default function ConnectWalletButton(){
 
     return (
     <Button onClick={connectWallet} disabled={!hasWallet}>
-        {hasWallet ? (isConnected ? address : 'Connect Wallet') : 'Install an Ethereum wallet'}
+        {hasWallet ? (!!signer ? "connected" : 'Connect Wallet') : 'Install an Ethereum wallet'}
     </Button>
     )
 }

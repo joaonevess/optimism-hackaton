@@ -1,17 +1,26 @@
 "use client"
 
+import { useState } from "react";
 import Header from "./Header/Header";
 
 export default function Home() {
-  return (
-    <div className="main-div flex flex-col min-h-dvh items-center justify-between ">
-      <Header className="main-div-auth-child" />
-      <main className="bg-[#00ff00] main-div-auth-child">
-        placeholder main
-      </main>
-      <footer className="bg-[#0000ff] main-div-auth-child">
-        placeholder footer
-      </footer>
-    </div>
-  );
+  const [hasWallet, setHasWallet] = useState(false)
+  const [signer, setSigner] = useState(undefined)
+
+    // window.ethereum will exis if user has EIP-1193 wallet installed
+      if (window && window.ethereum && !hasWallet) {
+          setHasWallet(true)
+      }
+
+    return (
+      <div className="main-div flex flex-col min-h-dvh items-center justify-between ">
+        <Header className="main-div-auth-child" setSigner={(signerToBe) => setSigner} hasWallet={hasWallet} signer={signer}/>
+        <main className="bg-[#00ff00] main-div-auth-child">
+          placeholder main
+        </main>
+        <footer className="bg-[#0000ff] main-div-auth-child">
+          placeholder footer
+        </footer>
+      </div>
+    );
 }
