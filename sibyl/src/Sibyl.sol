@@ -78,7 +78,7 @@ contract Sibyl is AccessControl, Pausable {
 
         require(
             requests[requestId].status == RequestStatus.Responded,
-            "Sibyl: Request is not responded or has failed"
+            "Sibyl: Request is not responded."
         );
 
         return requests[requestId].response;
