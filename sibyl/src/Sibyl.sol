@@ -74,11 +74,11 @@ contract Sibyl is AccessControl, Pausable {
     function readResponse(
         uint256 requestId
     ) public view returns (Response memory) {
-        require(requestId < requestCounter, "Sibyl: Request does not exist");
+        require(requestId < requestCounter, "Sibyl: Invalid request ID");
 
         require(
             requests[requestId].status == RequestStatus.Responded,
-            "Sibyl: Request is not responded."
+            "Sibyl: Request is not responded"
         );
 
         return requests[requestId].response;
@@ -87,7 +87,7 @@ contract Sibyl is AccessControl, Pausable {
     function getQueryStatus(
         uint256 requestId
     ) public view returns (RequestStatus) {
-        require(requestId < requestCounter, "Sibyl: Request does not exist");
+        require(requestId < requestCounter, "Sibyl: Invalid request ID");
 
         return requests[requestId].status;
     }
@@ -99,7 +99,7 @@ contract Sibyl is AccessControl, Pausable {
     ) public onlyRole(DATA_PROVIDER_ROLE) whenNotPaused {
         require(
             requests[requestId].status == RequestStatus.Pending,
-            "Sibyl: Request not in Pending state"
+            "Sibyl: Request is not Pending"
         );
 
         requests[requestId].response = response;
@@ -112,7 +112,7 @@ contract Sibyl is AccessControl, Pausable {
     ) public onlyRole(DATA_PROVIDER_ROLE) whenNotPaused {
         require(
             requests[requestId].status == RequestStatus.Pending,
-            "Request is not pending"
+            "Sibyl: Request is not pending"
         );
 
         requests[requestId].status = RequestStatus.Failed;
