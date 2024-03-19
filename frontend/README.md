@@ -12,10 +12,10 @@ Then install all dependencies by running
 bun install
 ```
 
-First, run the development server:
+Then, run the development server:
 
 ```bash
-bun run dev
+bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
