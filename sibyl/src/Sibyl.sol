@@ -14,7 +14,6 @@ contract Sibyl is AccessControl, Pausable {
     event QueryCompleted(uint256 requestId);
 
     struct Query {
-        uint256 requestId;
         string question;
         RequestStatus status;
         AIModel model;
@@ -60,7 +59,6 @@ contract Sibyl is AccessControl, Pausable {
 
         uint256 requestId = requestCounter++;
         requests[requestId] = Query(
-            requestId,
             question,
             RequestStatus.Pending,
             model,
