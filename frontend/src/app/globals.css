@@ -84,5 +84,5 @@ body > * {
 }
 
 .main-div-auth-child{
-  display: block;
+  display: flex;
 }
