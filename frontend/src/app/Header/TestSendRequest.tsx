@@ -13,7 +13,7 @@ export default function TestSendRequest({signer} : {signer: any}){
             // This imports the contract's definition and creates a Contract "class". The json comes from sibyl/out/Sibyl.sol/Sibyl.json
             const contractAbi = require("@/lib/Sibyl.json")
             const contractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3"
-            const contract = new ethers.Contract(
+            const sibyl = new ethers.Contract(
                 contractAddress,
                 contractAbi.abi,
                 signer
@@ -26,7 +26,7 @@ export default function TestSendRequest({signer} : {signer: any}){
 
             const request = [question, model, responseType]
 
-            contract.query(request).then((result: any) => {
+            sibyl.query(request).then((result: any) => {
                 console.log(result)
                 setResult(result.hash)
             })
