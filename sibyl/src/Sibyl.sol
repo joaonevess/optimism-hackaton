@@ -46,6 +46,7 @@ contract Sibyl is AccessControl, Pausable {
         bool boolResponse;
     }
 
+    uint256 pricePerInputChar;
     uint256 private requestCounter;
     mapping(uint256 => Query) private requests;
 
@@ -54,8 +55,13 @@ contract Sibyl is AccessControl, Pausable {
         string memory question,
         AIModel model,
         ResponseType responseType
-    ) public whenNotPaused returns (uint256) {
+    ) public payable whenNotPaused returns (uint256) {
         require(bytes(question).length > 0, "Sibyl: Question cannot be empty");
+
+        require(
+            msg.value >= bytes(question).length * pricePerInputChar,
+            "Sibyl: Insufficient funds"
+        );
 
         uint256 requestId = requestCounter++;
         requests[requestId] = Query(
@@ -67,6 +73,10 @@ contract Sibyl is AccessControl, Pausable {
         );
         emit QueryRequested(requestId, question, model, responseType);
         return requestId;
+    }
+
+    function getCurrentPrice() public view returns (uint256) {
+        return pricePerInputChar;
     }
 
     function readResponse(
@@ -105,7 +115,7 @@ contract Sibyl is AccessControl, Pausable {
         emit QueryCompleted(requestId);
     }
 
-    function markRequestAsFailed(
+    function cancelPendingRequest(
         uint256 requestId
     ) public onlyRole(DATA_PROVIDER_ROLE) whenNotPaused {
         require(
@@ -119,18 +129,58 @@ contract Sibyl is AccessControl, Pausable {
     }
 
     // Admin functionality
-    constructor(address defaultAdmin) {
-        _grantRole(DEFAULT_ADMIN_ROLE, defaultAdmin);
+
+    address payable public adminAddress;
+    bytes32 public constant DATA_PROVIDER_ROLE =
+        keccak256("DATA_PROVIDER_ROLE");
+    constructor() {
+        _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
+        adminAddress = payable(msg.sender);
+        pricePerInputChar = 0.00001 ether; // todo set a reasonable price per char
     }
+
+    modifier onlyAdmin() {
+        require(
+            hasRole(DEFAULT_ADMIN_ROLE, msg.sender),
+            "Only admin can call this function"
+        );
+        _;
+    }
+
+    function setNewPrice(uint256 _price) public onlyAdmin {
+        pricePerInputChar = _price;
+    }
+
+    // Helper function to read the balance of this contract
+    // access control is not required because it's a view function and contract balance is public data
+    function getBalance() public view returns (uint256) {
+        return address(this).balance;
+    }
+
+    // Function to withdraw all Ether from this contract to the admin
+    function drainFunds() public onlyAdmin {
+        uint256 amount = address(this).balance;
+
+        (bool success, ) = adminAddress.call{value: amount}("");
+        require(success, "Failed to send Ether");
+    }
+
+    // Function to withdraw a specific amount of Ether from this contract to the admin
+    function withdraw(uint256 _amount) public onlyAdmin {
+        (bool success, ) = adminAddress.call{value: _amount}("");
+        require(success, "Failed to send Ether");
+    }
+
+    // Function to send Ether from this contract to an arbitrary address
+    function sendEther(address payable _to, uint256 _amount) public onlyAdmin {
+        (bool success, ) = _to.call{value: _amount}("");
+        require(success, "Failed to send Ether");
+    }
+
     event DataProviderRegistered(address provider);
     event DataProviderRemoved(address provider);
 
-    bytes32 public constant DATA_PROVIDER_ROLE =
-        keccak256("DATA_PROVIDER_ROLE");
-
-    function registerDataProvider(
-        address _newProvider
-    ) public onlyRole(DEFAULT_ADMIN_ROLE) {
+    function registerDataProvider(address _newProvider) public onlyAdmin {
         require(
             !hasRole(DATA_PROVIDER_ROLE, _newProvider),
             "Sibyl: Address is already a provider"
@@ -140,9 +190,7 @@ contract Sibyl is AccessControl, Pausable {
         emit DataProviderRegistered(_newProvider);
     }
 
-    function removeDataProvider(
-        address _provider
-    ) public onlyRole(DEFAULT_ADMIN_ROLE) {
+    function removeDataProvider(address _provider) public onlyAdmin {
         require(
             hasRole(DATA_PROVIDER_ROLE, _provider),
             "Sibyl: Address is not a provider"
@@ -152,11 +200,18 @@ contract Sibyl is AccessControl, Pausable {
         emit DataProviderRemoved(_provider);
     }
 
-    function pause() public onlyRole(DEFAULT_ADMIN_ROLE) {
+    function transferAdmin(address _newAdmin) public onlyAdmin {
+        _grantRole(DEFAULT_ADMIN_ROLE, _newAdmin);
+        adminAddress = payable(_newAdmin);
+
+        _revokeRole(DEFAULT_ADMIN_ROLE, msg.sender);
+    }
+
+    function pause() public onlyAdmin {
         _pause();
     }
 
-    function unpause() public onlyRole(DEFAULT_ADMIN_ROLE) {
+    function unpause() public onlyAdmin {
         _unpause();
     }
 }
