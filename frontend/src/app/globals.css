@@ -2,33 +2,52 @@
 @tailwind components;
 @tailwind utilities;
  
+/*
+Light - Base : Marble White	[60.0, 0.03225806451612903, 0.9568627450980391]
+Light - Primary : Terracotta	[10.222222222222225, 0.5973451327433628, 0.6215686274509804]
+Light - Secondary : Deep Teal	[187.22891566265062, 1.0, 0.1627450980392157]
+Light - Text : Dark Brown	[32.727272727272734, 0.859375, 0.14313725490196078]
+Light - highlight : Classic Gold	[45.859872611464965, 0.7405660377358491, 0.5235294117647059]
+Dark - Base : Aegean Blue	[211.13924050632912, 0.7181818181818181, 0.27647058823529413]
+Dark - Primary : Ochre	[30.0, 0.8333333333333334, 0.4666666666666667]
+Dark - Secondary : Cream	[57.446808510638306, 0.1843137254901961, 0.907843137254902]
+Dark - Text : Alabaster	[46.15384615384608, 0.05485232067510553, 0.903921568627451]
+Dark - highlight : Subtle Gold	[39.16666666666666, 0.6127659574468085, 0.6392156862745098] 
+*/
+
+/* "foreground" means text btw */
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 224 71.4% 4.1%;
+    --background: 60 32% 96%;
+    --foreground: 32.7 85.9% 14.3%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 224 71.4% 4.1%;
- 
-    --popover: 0 0% 100%;
-    --popover-foreground: 224 71.4% 4.1%;
- 
-    --primary: 220.9 39.3% 11%;
-    --primary-foreground: 210 20% 98%;
- 
-    --secondary: 220 14.3% 95.9%;
-    --secondary-foreground: 220.9 39.3% 11%;
- 
-    --muted: 220 14.3% 95.9%;
-    --muted-foreground: 220 8.9% 46.1%;
- 
-    --accent: 220 14.3% 95.9%;
-    --accent-foreground: 220.9 39.3% 11%;
- 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 20% 98%;
+    /* <Card /> */
+    /* --card: 0 0% 100%;
+    --card-foreground: 224 71.4% 4.1%; */ 
 
-    --border: 220 13% 91%;
+    /*  popovers such as <DropdownMenu />, <HoverCard />, <Popover /> */
+    /* --popover: 0 0% 100%;
+    --popover-foreground: 224 71.4% 4.1%; */ 
+ 
+    /* <Button */ 
+    --primary: 10.2 59.7% 62.2%;
+    --primary-foreground: 32.7 85.9% 14.3%;
+    --secondary: 187.23, 100%, 16.3%;
+    --secondary-foreground: 32.7 85.9% 14.3%;
+ 
+    /* Muted backgrounds such as <TabsList />, <Skeleton /> and <Switch /> */
+    /* --muted: 220 14.3% 95.9%;
+    --muted-foreground: 220 8.9% 46.1%; */
+ 
+    /* Used for accents such as hover effects on <DropdownMenuItem>, <SelectItem>...etc */
+    /* --accent: 220 14.3% 95.9%;
+    --accent-foreground: 220.9 39.3% 11%; */
+ 
+    /* Used for destructive actions such as <Button variant="destructive"> */
+    /* --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 20% 98%; */
+
+    --border: 45.9 74.1% 52.4%;
     --input: 220 13% 91%;
     --ring: 224 71.4% 4.1%;
  
@@ -36,31 +55,36 @@
   }
  
   .dark {
-    --background: 224 71.4% 4.1%;
-    --foreground: 210 20% 98%;
+    --background: 211.1 71.82% 27.65%;
+    --foreground: 46.15 5.5% 90.4%;
  
-    --card: 224 71.4% 4.1%;
-    --card-foreground: 210 20% 98%;
+    /* <Card /> */
+    /* --card: 224 71.4% 4.1%;
+    --card-foreground: 210 20% 98%; */
  
-    --popover: 224 71.4% 4.1%;
-    --popover-foreground: 210 20% 98%;
+    /*  popovers such as <DropdownMenu />, <HoverCard />, <Popover /> */
+    /* --popover: 224 71.4% 4.1%;
+    --popover-foreground: 210 20% 98%; */
  
-    --primary: 210 20% 98%;
-    --primary-foreground: 220.9 39.3% 11%;
+    /* <Button */
+    --primary: 30 83% 46.7%;
+    --primary-foreground: 46.15 5.5% 90.4%;
+    --secondary: 57.5 18.43% 70.78%;
+    --secondary-foreground: 46.15 5.5% 90.4%;
  
-    --secondary: 215 27.9% 16.9%;
-    --secondary-foreground: 210 20% 98%;
+    /* Muted backgrounds such as <TabsList />, <Skeleton /> and <Switch /> */
+    /* --muted: 215 27.9% 16.9%;
+    --muted-foreground: 217.9 10.6% 64.9%; */
  
-    --muted: 215 27.9% 16.9%;
-    --muted-foreground: 217.9 10.6% 64.9%;
+    /* Used for accents such as hover effects on <DropdownMenuItem>, <SelectItem>...etc */
+    /* --accent: 215 27.9% 16.9%;
+    --accent-foreground: 210 20% 98%; */
  
-    --accent: 215 27.9% 16.9%;
-    --accent-foreground: 210 20% 98%;
+    /* Used for destructive actions such as <Button variant="destructive"> */
+    /* --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 20% 98%; */
  
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 20% 98%;
- 
-    --border: 215 27.9% 16.9%;
+    --border: 39.2 61.3% 63.9%;
     --input: 215 27.9% 16.9%;
     --ring: 216 12.2% 83.9%;
   }

@@ -12,7 +12,7 @@ export default function Home() {
   if (window && window.ethereum && !hasWallet) {
       setHasWallet(true)
   }
-
+  // TODO: Add a theme change button. Ideally, use a greek moon and sun icon.
   return (
     <div className="main-div flex flex-col min-h-dvh items-center justify-between ">
       <Header className="main-div-auth-child" setSigner={setSigner} hasWallet={hasWallet} signer={signer}/>
