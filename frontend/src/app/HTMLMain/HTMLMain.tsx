@@ -2,6 +2,7 @@ import { ethers } from "ethers";
 import { Demo } from "../page";
 import LoginDemo from "./DemoMain/LoginDemo";
 import EducationDemo from "./DemoMain/EducationDemo";
+import { Button } from "@/components/ui/button";
 
 interface HTMLMainProps {
     className: string
@@ -28,11 +29,17 @@ export default function HTMLMain({className,setSigner, signer, currDemo, setCurr
         }
     }
 
-    console.log(signer)
-
     return (
-        <main className={`${className} `}>
+        <main className={`${className} w-full flex flex-row justify-between`}>
+            <div className="flex flex-col px-10">
+                <Button className="my-10" onClick={() => setCurrDemo(Demo.education)}>Education</Button>
+                <Button onClick={() => setCurrDemo(Demo.logistiscs)}>Logistics</Button>
+            </div>
             {selectDemoMain()}
+            <div className="flex flex-col px-10">
+                <Button className="my-10" onClick={() => setCurrDemo(Demo.finances)}>Finances</Button>
+                <Button onClick={() => setCurrDemo(Demo.privacy)}>Privacy</Button>
+            </div>
         </main>
     )
 }
