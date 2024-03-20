@@ -8,9 +8,10 @@ export interface ConnectWalletButtonProps {
     signer: ethers.JsonRpcSigner | undefined
 }
 
-
+// DEPRECATED
 export default function ConnectWalletButton({setSigner, hasWallet, signer} : ConnectWalletButtonProps){
 
+    
     const connectWallet = () => {
         try {
             const provider = new ethers.BrowserProvider(window.ethereum)

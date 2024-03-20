@@ -8,7 +8,7 @@ interface HeaderProps {
     hasWallet: boolean
     signer: ethers.JsonRpcSigner | undefined
 }
-
+// DEPRECATED
 export default function Header({className, setSigner, hasWallet, signer} : HeaderProps) {
     return (
         <header className={`${className} flex-row flex-nowrap justify-between w-full px-10 py-5`}>
