@@ -17,9 +17,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-        <body className={`${inter.className} overflow-hidden`}>{children}</body>
-      </ThemeProvider>
+        <body className={`${inter.className} overflow-hidden`}>
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange enableColorScheme>
+            {children}
+          </ThemeProvider>
+        </body>
     </html>
   );
 }
