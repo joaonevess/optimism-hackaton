@@ -3,6 +3,7 @@ import { Demo } from "../page";
 import LoginDemo from "./DemoMain/LoginDemo";
 import EducationDemo from "./DemoMain/EducationDemo";
 import { Button } from "@/components/ui/button";
+import { useEffect, useState } from "react";
 
 interface HTMLMainProps {
     className: string
@@ -12,9 +13,10 @@ interface HTMLMainProps {
     setCurrDemo: (demo: Demo) => void
 }
 
-export default function HTMLMain({className,setSigner, signer, currDemo, setCurrDemo} : HTMLMainProps) {
+export default function HTMLMain({className, setSigner, signer, currDemo, setCurrDemo} : HTMLMainProps) {
+    const [isLogin, setIsLogin] = useState(true)
     const selectDemoMain = () => {
-        if (!signer) return <LoginDemo setSigner={setSigner} setCurrDemo={setCurrDemo}/>
+        if (isLogin) return <LoginDemo setSigner={setSigner} setCurrDemo={setCurrDemo}/>
         switch (currDemo) {
             case Demo.login:
                 return <LoginDemo setSigner={setSigner} setCurrDemo={setCurrDemo}/>
@@ -28,17 +30,22 @@ export default function HTMLMain({className,setSigner, signer, currDemo, setCurr
                 return <div> Privacy </div>
         }
     }
-
+    useEffect(() => {
+        setIsLogin(currDemo === Demo.login || !signer) // TODO: improve
+    }, [currDemo, signer])
+    
+    // TODO: match actual distances. Align things up?
+    // TODO: add actual .svg icons
     return (
         <main className={`${className} w-full flex flex-row justify-between`}>
             <div className="flex flex-col px-10">
-                <Button className="my-10" onClick={() => setCurrDemo(Demo.education)}>Education</Button>
-                <Button onClick={() => setCurrDemo(Demo.logistiscs)}>Logistics</Button>
+                <Button disabled={isLogin} className="my-5 rounded-full w-[75px] h-[75px] text-[3rem]" onClick={() => setCurrDemo(Demo.education)}>🎓</Button>
+                <Button disabled={isLogin} className="my-5 rounded-full w-[75px] h-[75px] text-[3rem]" onClick={() => setCurrDemo(Demo.logistiscs)}>⛟</Button>
             </div>
             {selectDemoMain()}
             <div className="flex flex-col px-10">
-                <Button className="my-10" onClick={() => setCurrDemo(Demo.finances)}>Finances</Button>
-                <Button onClick={() => setCurrDemo(Demo.privacy)}>Privacy</Button>
+                <Button disabled={isLogin} className="my-5 rounded-full w-[75px] h-[75px] text-[3rem]" onClick={() => setCurrDemo(Demo.finances)}>🏦</Button>
+                <Button disabled={isLogin} className="my-5 rounded-full w-[75px] h-[75px] text-[3rem]" onClick={() => setCurrDemo(Demo.privacy)}>🙈</Button>
             </div>
         </main>
     )
