@@ -8,7 +8,7 @@ interface LoginDemoProps {
     setCurrDemo: (demo: Demo) => void
 }
 
-export default function LoginDemo({setSigner, signer, setCurrDemo} : LoginDemoProps) {
+export default function LoginDemo({setSigner, setCurrDemo} : LoginDemoProps) {
     const [hasWallet, setHasWallet] = useState(false)
 
     const firstDemo = Demo.education
