@@ -63,12 +63,12 @@ export default function Sidebar(props: React.PropsWithChildren<SidebarProps>) {
         <div className={"w-full flex flex-row justify-between items-center"}>
             <div className="flex flex-col" style={leftButtonCointainerStyle}>
                 <Button className={!signer ? "hidden" : "rounded-full"} style={topButtonStyle} onClick={() => setCurrDemo(Demo.education)}><Education className="stroke-[hsl(var(--foreground))] fill-none"/></Button>
-                <Button className={!signer ? "hidden" : "rounded-full"} style={bottomButtonStyle} onClick={() => setCurrDemo(Demo.logistiscs)}>⛟</Button>
+                <Button className={!signer ? "hidden" : "rounded-full"} style={bottomButtonStyle} onClick={() => setCurrDemo(Demo.compliance)}>⛟</Button>
             </div>
             {children}
             <div className="flex flex-col" style={rightButtonContainerStyle}>
-                <Button className={!signer ? "hidden" : "rounded-full"} style={topButtonStyle} onClick={() => setCurrDemo(Demo.finances)}>🏦</Button>
-                <Button className={!signer ? "hidden" : "rounded-full"} style={bottomButtonStyle} onClick={() => setCurrDemo(Demo.privacy)}>🙈</Button>
+                <Button className={!signer ? "hidden" : "rounded-full"} style={topButtonStyle} onClick={() => setCurrDemo(Demo.forecast)}>🏦</Button>
+                <Button className={!signer ? "hidden" : "rounded-full"} style={bottomButtonStyle} onClick={() => setCurrDemo(Demo.judge)}>🙈</Button>
             </div>
         </div>
 

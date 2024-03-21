@@ -5,15 +5,16 @@ import LoginDemo from "./Demos/LoginDemo";
 import EducationDemo from "./Demos/EducationDemo";
 import Sidebar from "./Sidebar";
 import { useState } from "react";
+import ForecastDemo from "./Demos/ForecastDemo";
+import ComplianceDemo from "./Demos/ComplianceDemo";
+import JudgeDemo from "./Demos/JudgeDemo";
 
-// TODO: Define which ones we should actually demo
 export enum Demo {
     login,
     education,
-    logistiscs,
-    finances,
-    privacy,
-    games
+    compliance,
+    forecast,
+    judge,
   }
 
 interface HTMLMainProps {
@@ -30,14 +31,13 @@ export default function HTMLMain({className} : HTMLMainProps) {
         switch (currDemo) {
             case Demo.education:
                 return <EducationDemo signer={signer}/>
-            case Demo.logistiscs:
-                return <div> Logistics </div>
-            case Demo.finances:
-                return <div> Finances </div>
-            case Demo.privacy:
-                return <div> Privacy </div>
-            case Demo.games:
-                return <div> Games </div>
+            case Demo.compliance:
+                return <ComplianceDemo signer={signer}/>
+            case Demo.forecast:
+                return <ForecastDemo signer={signer}/>
+            case Demo.judge:
+                return <JudgeDemo signer={signer}/>
+
         }
     }
 
