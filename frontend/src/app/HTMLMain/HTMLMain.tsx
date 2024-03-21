@@ -2,8 +2,6 @@ import { ethers } from "ethers";
 import { Demo } from "../page";
 import LoginDemo from "./DemoMain/LoginDemo";
 import EducationDemo from "./DemoMain/EducationDemo";
-import { Button } from "@/components/ui/button";
-import { useEffect, useState } from "react";
 import Sidebar from "./Sidebar";
 
 interface HTMLMainProps {
@@ -18,8 +16,6 @@ export default function HTMLMain({className, setSigner, signer, currDemo, setCur
     const selectDemoMain = () => {
         if (currDemo === Demo.login || !signer) return <LoginDemo setSigner={setSigner} setCurrDemo={setCurrDemo}/>
         switch (currDemo) {
-            case Demo.login:
-                return <LoginDemo setSigner={setSigner} setCurrDemo={setCurrDemo}/>
             case Demo.education:
                 return <EducationDemo signer={signer}/>
             case Demo.logistiscs:

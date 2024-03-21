@@ -3,7 +3,6 @@
 import { useState } from "react";
 import Header from "./Header/Header";
 import { ethers } from "ethers";
-import { useTheme } from "next-themes";
 import HTMLMain from "./HTMLMain/HTMLMain";
 
 // TODO: Define which ones we should actually demo

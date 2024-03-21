@@ -1,6 +1,8 @@
 import { Demo } from "@/app/page"
+import Metamask from "@/components/svgs/metamask"
 import { Button } from "@/components/ui/button"
 import { ethers } from "ethers"
+import Image from "next/image"
 import { useState } from "react"
 
 interface LoginDemoProps {
@@ -33,10 +35,8 @@ export default function LoginDemo({setSigner, setCurrDemo} : LoginDemoProps) {
     }
 
     return (
-        <Button onClick={connectWallet} className="rounded-full w-[300px] h-[300px]">
-            <p className="text-white text-[15rem]">
-                ⟠
-            </p>
+        <Button onClick={connectWallet} className="rounded-full w-[300px] h-[300px] flex align-center justify-center">
+            <Metamask className="stroke-[hsl(var(--secondary))]"/>
         </Button>
     )
 
