@@ -5,8 +5,7 @@ import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/utils/Pausable.sol";
 
 contract Sibyl is AccessControl, Pausable {
-    // TODO: check if this is the best implementation. Alternativelly, we could use a different event.
-    // Maybe add something like a requesterAddress or date? unsure if needed.
+    // TODO: Ideally, the function's key would be a hash of the caller address + allinfo (or date?)
     event QueryRequested(
         uint256 requestId,
         string question,
