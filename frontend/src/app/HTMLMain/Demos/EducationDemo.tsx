@@ -1,10 +1,8 @@
-import { Demo } from "@/app/page"
 import { Button } from "@/components/ui/button"
-import { Input, TextArea } from "@/components/ui/input"
+import { TextArea } from "@/components/ui/input"
 import { Query, QueryResponse, responseType } from "@/lib/sibyl"
 import { cn } from "@/lib/utils"
 import { Label } from "@radix-ui/react-label"
-import { IconBrandGithub, IconBrandGoogle, IconBrandOnlyfans } from "@tabler/icons-react"
 import { ethers } from "ethers"
 import { useState } from "react"
 

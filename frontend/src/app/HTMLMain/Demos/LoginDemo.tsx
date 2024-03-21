@@ -1,9 +1,8 @@
-import { Demo } from "@/app/page"
 import Metamask from "@/components/svgs/metamask"
 import { Button } from "@/components/ui/button"
 import { ethers } from "ethers"
-import Image from "next/image"
 import { useState } from "react"
+import { Demo } from "../HTMLMain"
 
 interface LoginDemoProps {
     setSigner: (signer: ethers.JsonRpcSigner | undefined) => void
@@ -16,12 +15,14 @@ export default function LoginDemo({setSigner, setCurrDemo} : LoginDemoProps) {
     const firstDemo = Demo.education
 
     // window.ethereum will exist if user has EIP-1193 wallet installed
+    // @ts-ignore
     if (window && window.ethereum && !hasWallet) {
         setHasWallet(true)
     }
 
     const connectWallet = () => {
         try {
+            // @ts-ignore
             const provider = new ethers.BrowserProvider(window.ethereum)
             console.log(provider)
             provider.getSigner().then((providedSigner) => {

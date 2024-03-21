@@ -1,18 +1,28 @@
 import { ethers } from "ethers";
-import { Demo } from "../page";
 import LoginDemo from "./Demos/LoginDemo";
 import EducationDemo from "./Demos/EducationDemo";
 import Sidebar from "./Sidebar";
+import { useState } from "react";
+
+// TODO: Define which ones we should actually demo
+export enum Demo {
+    login,
+    education,
+    logistiscs,
+    finances,
+    privacy,
+    games
+  }
 
 interface HTMLMainProps {
     className: string
-    setSigner: (signer: ethers.JsonRpcSigner | undefined) => void
-    signer: ethers.JsonRpcSigner | undefined
-    currDemo: Demo
-    setCurrDemo: (demo: Demo) => void
+
 }
 
-export default function HTMLMain({className, setSigner, signer, currDemo, setCurrDemo} : HTMLMainProps) {
+export default function HTMLMain({className} : HTMLMainProps) {
+    const [signer, setSigner] = useState<ethers.JsonRpcSigner | undefined>(undefined)
+    const [currDemo, setCurrDemo] = useState<Demo>(Demo.login)
+
     const selectDemoMain = () => {
         if (currDemo === Demo.login || !signer) return <LoginDemo setSigner={setSigner} setCurrDemo={setCurrDemo}/>
         switch (currDemo) {
@@ -24,6 +34,8 @@ export default function HTMLMain({className, setSigner, signer, currDemo, setCur
                 return <div> Finances </div>
             case Demo.privacy:
                 return <div> Privacy </div>
+            case Demo.games:
+                return <div> Games </div>
         }
     }
 
