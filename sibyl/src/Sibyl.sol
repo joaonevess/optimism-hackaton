@@ -17,7 +17,6 @@ contract Sibyl is AccessControl, Pausable {
 
     event QueryCompleted(
         uint256 indexed requestId,
-        Response response
         );
 
     struct Query {
@@ -129,7 +128,7 @@ contract Sibyl is AccessControl, Pausable {
 
         requests[requestId].response = response;
         requests[requestId].status = RequestStatus.Responded;
-        emit QueryCompleted(requestId, requests[requestId].response);
+        emit QueryCompleted(requestId);
     }
 
     function cancelPendingRequest(
@@ -142,7 +141,7 @@ contract Sibyl is AccessControl, Pausable {
 
         requests[requestId].status = RequestStatus.Failed;
 
-        emit QueryCompleted(requestId, requests[requestId].response);
+        emit QueryCompleted(requestId);
     }
 
     // Admin functionality
