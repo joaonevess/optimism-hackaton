@@ -59,7 +59,7 @@ async def fulfill_request(
     print(f"Tx hash: {tx_hash.hex()}")
 
 
-async def cancelPendingRequest(sibyl, query_requested_event: QueryRequestedEvent):
+async def cancel_pending_request(sibyl, query_requested_event: QueryRequestedEvent):
     print(f"Cancelling request: {query_requested_event}")
     tx_hash = await sibyl.functions.cancelPendingRequest(
         query_requested_event.requestId
@@ -86,7 +86,7 @@ async def handle_events(sibyl, async_callback):
                 await fulfill_request(sibyl, query_requested, response)
             except Exception as e:
                 print(f"Error getting response from LLM: {e}")
-                await cancelPendingRequest(sibyl, query_requested)
+                await cancel_pending_request(sibyl, query_requested)
 
 
 # TEST FUNCTIONS. These are not part of the main application
