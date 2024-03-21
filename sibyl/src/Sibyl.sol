@@ -6,23 +6,19 @@ import "@openzeppelin/contracts/utils/Pausable.sol";
 
 contract Sibyl is AccessControl, Pausable {
     // TODO: check if this is the best implementation. Alternativelly, we could use a different event.
-        // Maybe add something like a requesterAddress or date? unsure if needed.
+    // Maybe add something like a requesterAddress or date? unsure if needed.
     event QueryRequested(
         uint256 requestId,
-        string indexed question,
-        AIModel indexed model,
-        ResponseType indexed responseType
+        string question,
+        ResponseType responseType,
+        address indexed callerAddress
     );
 
-
-    event QueryCompleted(
-        uint256 indexed requestId
-        );
+    event QueryCompleted(uint256 indexed requestId);
 
     struct Query {
         string question;
         RequestStatus status;
-        AIModel model;
         Response response;
         ResponseType responseType;
     }
@@ -31,13 +27,6 @@ contract Sibyl is AccessControl, Pausable {
         Pending,
         Responded,
         Failed
-    }
-
-    enum AIModel {
-        Gemini,
-        GPT4,
-        GPT3,
-        Claude
     }
 
     enum ResponseType {
@@ -59,7 +48,6 @@ contract Sibyl is AccessControl, Pausable {
     // Public functionality
     function query(
         string memory question,
-        AIModel model,
         ResponseType responseType
     ) public payable whenNotPaused returns (uint256) {
         require(bytes(question).length > 0, "Sibyl: Question cannot be empty");
@@ -73,11 +61,10 @@ contract Sibyl is AccessControl, Pausable {
         requests[requestId] = Query(
             question,
             RequestStatus.Pending,
-            model,
             Response(0, "", false),
             responseType
         );
-        emit QueryRequested(requestId, question, model, responseType);
+        emit QueryRequested(requestId, question, responseType, msg.sender);
         return requestId;
     }
 
@@ -148,6 +135,7 @@ contract Sibyl is AccessControl, Pausable {
     address payable public adminAddress;
     constructor() {
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
+        _grantRole(DATA_PROVIDER_ROLE, msg.sender);
         adminAddress = payable(msg.sender);
         pricePerInputChar = 0.00001 ether; // todo set a reasonable price per char
     }
