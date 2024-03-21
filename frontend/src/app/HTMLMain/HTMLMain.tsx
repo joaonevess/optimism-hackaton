@@ -4,6 +4,7 @@ import LoginDemo from "./DemoMain/LoginDemo";
 import EducationDemo from "./DemoMain/EducationDemo";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
+import Sidebar from "./Sidebar";
 
 interface HTMLMainProps {
     className: string
@@ -37,16 +38,10 @@ export default function HTMLMain({className, setSigner, signer, currDemo, setCur
     // TODO: match actual distances. Align things up?
     // TODO: add actual .svg icons
     return (
-        <main className={`${className} w-full flex flex-row justify-between`}>
-            <div className="flex flex-col px-10">
-                <Button disabled={isLogin} className="my-5 rounded-full w-[75px] h-[75px] text-[3rem]" onClick={() => setCurrDemo(Demo.education)}>🎓</Button>
-                <Button disabled={isLogin} className="my-5 rounded-full w-[75px] h-[75px] text-[3rem]" onClick={() => setCurrDemo(Demo.logistiscs)}>⛟</Button>
-            </div>
-            {selectDemoMain()}
-            <div className="flex flex-col px-10">
-                <Button disabled={isLogin} className="my-5 rounded-full w-[75px] h-[75px] text-[3rem]" onClick={() => setCurrDemo(Demo.finances)}>🏦</Button>
-                <Button disabled={isLogin} className="my-5 rounded-full w-[75px] h-[75px] text-[3rem]" onClick={() => setCurrDemo(Demo.privacy)}>🙈</Button>
-            </div>
+        <main className={`${className} w-full`}>
+            <Sidebar setCurrDemo={setCurrDemo}>
+                {selectDemoMain()}
+            </Sidebar>
         </main>
     )
 }
