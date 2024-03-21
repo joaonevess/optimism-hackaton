@@ -9,7 +9,7 @@ interface EducationDemoProps {
 }
 
 export default function EducationDemo({signer} : EducationDemoProps) {
-    const [requestId, setRequestId] = useState<QueryResponse | undefined>()
+    const [queryResponse, setQueryResponse] = useState<QueryResponse | undefined>()
 
     const demoQuestion = "What is the capital of France?"
 
@@ -17,14 +17,14 @@ export default function EducationDemo({signer} : EducationDemoProps) {
         const queryInfo = {
             question: question,
             signer: signer,
-            setRequestId: setRequestId,
+            setQueryResponse: setQueryResponse,
         }
         Query(queryInfo)
     }
 
     return (
         <Button onClick={() => educationDemoRequest(demoQuestion)} className="rounded-full w-[300px] h-[300px]">
-            {requestId ? requestId : "🎓"}
+            {queryResponse ? queryResponse : "🎓"}
         </Button>
     )
 

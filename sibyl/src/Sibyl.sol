@@ -5,13 +5,20 @@ import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/utils/Pausable.sol";
 
 contract Sibyl is AccessControl, Pausable {
+    // TODO: check if this is the best implementation. Alternativelly, we could use a different event.
+        // Maybe add something like a requesterAddress or date? unsure if needed.
     event QueryRequested(
         uint256 requestId,
-        string question,
-        AIModel model,
-        ResponseType responseType
+        string indexed question,
+        AIModel indexed model,
+        ResponseType indexed responseType
     );
-    event QueryCompleted(uint256 requestId);
+
+
+    event QueryCompleted(
+        uint256 indexed requestId,
+        Response response
+        );
 
     struct Query {
         string question;
@@ -122,7 +129,7 @@ contract Sibyl is AccessControl, Pausable {
 
         requests[requestId].response = response;
         requests[requestId].status = RequestStatus.Responded;
-        emit QueryCompleted(requestId);
+        emit QueryCompleted(requestId, requests[requestId].response);
     }
 
     function cancelPendingRequest(
@@ -135,7 +142,7 @@ contract Sibyl is AccessControl, Pausable {
 
         requests[requestId].status = RequestStatus.Failed;
 
-        emit QueryCompleted(requestId);
+        emit QueryCompleted(requestId, requests[requestId].response);
     }
 
     // Admin functionality
