@@ -34,7 +34,7 @@ export default function HTMLMain({className, setSigner, signer, currDemo, setCur
     // TODO: add actual .svg icons
     return (
         <main className={`${className} w-full`}>
-            <Sidebar setCurrDemo={setCurrDemo}>
+            <Sidebar setCurrDemo={setCurrDemo} signer={signer}>
                 {selectDemoMain()}
             </Sidebar>
         </main>

@@ -1,15 +1,16 @@
 "use client"
 
 import { Button } from "@/components/ui/button";
-import { useEffect, useRef } from "react";
 import { Demo } from "../page";
+import { ethers } from "ethers";
 
 interface SidebarProps {
+    signer: ethers.JsonRpcSigner | undefined
     setCurrDemo: (demo: Demo) => void
 }
 
 export default function Sidebar(props: React.PropsWithChildren<SidebarProps>) {
-    const { setCurrDemo, children } = props
+    const { signer, setCurrDemo, children } = props
 
     // TODO: Make this reactive
     const pageWidth = window.innerWidth;
@@ -60,13 +61,13 @@ export default function Sidebar(props: React.PropsWithChildren<SidebarProps>) {
     return (
         <div className={"w-full flex flex-row justify-between items-center"}>
             <div className="flex flex-col" style={leftButtonCointainerStyle}>
-                <Button disabled={false} className="rounded-full" style={topButtonStyle} onClick={() => setCurrDemo(Demo.education)}>🎓</Button>
-                <Button disabled={false} className="rounded-full" style={bottomButtonStyle} onClick={() => setCurrDemo(Demo.logistiscs)}>⛟</Button>
+                <Button disabled={!signer} className="rounded-full" style={topButtonStyle} onClick={() => setCurrDemo(Demo.education)}>🎓</Button>
+                <Button disabled={!signer} className="rounded-full" style={bottomButtonStyle} onClick={() => setCurrDemo(Demo.logistiscs)}>⛟</Button>
             </div>
             {children}
             <div className="flex flex-col" style={rightButtonContainerStyle}>
-                <Button disabled={false} className="rounded-full" style={topButtonStyle} onClick={() => setCurrDemo(Demo.finances)}>🏦</Button>
-                <Button disabled={false} className="rounded-full" style={bottomButtonStyle} onClick={() => setCurrDemo(Demo.privacy)}>🙈</Button>
+                <Button disabled={!signer} className="rounded-full" style={topButtonStyle} onClick={() => setCurrDemo(Demo.finances)}>🏦</Button>
+                <Button disabled={!signer} className="rounded-full" style={bottomButtonStyle} onClick={() => setCurrDemo(Demo.privacy)}>🙈</Button>
             </div>
         </div>
 
