@@ -17,11 +17,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-        <body className={`${inter.className} overflow-hidden`}>
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange enableColorScheme>
-            {children}
-          </ThemeProvider>
-        </body>
+      <head>
+        <link rel="icon" href="/images/favicon.ico"/>
+      </head>  
+      <body className={`${inter.className} overflow-hidden`}>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange enableColorScheme>
+          {children}
+        </ThemeProvider>
+      </body>
     </html>
   );
 }
