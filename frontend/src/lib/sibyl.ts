@@ -8,7 +8,13 @@ export interface QueryProps {
     options?: {value: bigint}
 }
 
-export type QueryResponse = any
+export enum responseType {
+    BIGINT,
+    STR,
+    BOOLEAN
+}
+
+export type QueryResponse = bigint | string | boolean
 
 export function Query({signer, question, setQueryResponse, responseType = 0, options = {value: ethers.parseEther("1.0")}} : QueryProps) : Promise<any> | undefined{
     try {
@@ -27,21 +33,21 @@ export function Query({signer, question, setQueryResponse, responseType = 0, opt
 
         sibyl.once(filter, (event) => {
             const requestId = event.args[0]
-            // console.log("Request ID:")
-            // console.log(requestId)
+            console.log("Request ID:")
+            console.log(requestId)
             const filter2 = sibyl.filters.QueryCompleted(requestId)
-            sibyl.once(filter2, (response) => { 
+            sibyl.once(filter2, (_response) => { 
                 sibyl.readResponse(requestId).then((queryResult) => {
-                    // console.log("queryResult")
-                    // console.log(queryResult[responseType])
+                    console.log("queryResult")
+                    console.log(queryResult[responseType])
                     setQueryResponse(queryResult[responseType])
                 })
             })
 
             // Mock answer
-            // sibyl.fulfillRequest(requestId, [requestId, "Paris", false]).then((tx) => {
-            //     console.log(tx)
-            // })
+            sibyl.fulfillRequest(requestId, [ethers.toBigInt(73), "Paris", false]).then((tx) => {
+                console.log(tx)
+            })
 
         })
 

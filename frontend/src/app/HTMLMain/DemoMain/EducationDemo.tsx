@@ -1,7 +1,7 @@
 import { Demo } from "@/app/page"
 import { Button } from "@/components/ui/button"
 import { Input, TextArea } from "@/components/ui/input"
-import { Query, QueryResponse } from "@/lib/sibyl"
+import { Query, QueryResponse, responseType } from "@/lib/sibyl"
 import { cn } from "@/lib/utils"
 import { Label } from "@radix-ui/react-label"
 import { IconBrandGithub, IconBrandGoogle, IconBrandOnlyfans } from "@tabler/icons-react"
@@ -16,14 +16,15 @@ export default function EducationDemo({ signer }: EducationDemoProps) {
     const [queryResponse, setQueryResponse] = useState<QueryResponse | undefined>()
     const [currentAnswer, setCurrentAnswer] = useState<string>("")
 
-    const demoQuestion = "What is the capital of France?"
+    const demoQuestion = "What was the French Revolution?"
 
     const educationDemoRequest = (answer: string) => {
-        const finalQuestion = "Evaluate the answer to this question: \n" +  demoQuestion + "\n" + answer
+        const finalQuestion = "Evaluate the answer to this question with a grade between 0 and 100: \n" +  demoQuestion + "\n" + answer
 
         const queryInfo = {
-            question: finalQuestion,
             signer: signer,
+            question: finalQuestion,
+            responseType: responseType.BIGINT,
             setQueryResponse: setQueryResponse,
         }
         Query(queryInfo)
@@ -35,7 +36,7 @@ export default function EducationDemo({ signer }: EducationDemoProps) {
 
             <LabelInputContainer className="mb-4">
                 <Label htmlFor="answer">{demoQuestion}</Label>
-                <TextArea id="answer" placeholder="Paris" className="w-[300px] h-[300px] p-10 break-all" onChange={(v) => setCurrentAnswer(v.target.value)}/>
+                <TextArea id="answer" placeholder="Your answer" className="w-[300px] h-[300px] p-10 break-all" onChange={(v) => setCurrentAnswer(v.target.value)}/>
             </LabelInputContainer>
 
             <Button
@@ -45,9 +46,16 @@ export default function EducationDemo({ signer }: EducationDemoProps) {
                 Ask the oracle
                 <BottomGradient />
             </Button>
-
             <div className="bg-gradient-to-r from-transparent via-[hsl(var(--accent))] to-transparent my-8 h-[1px] w-full" />
-
+            {queryResponse !== undefined && (
+                <div>
+                    <div className="text-center">
+                        <span className="text-[hsl(var(--accent))] font-bold">Sibyl </span>
+                        <span>has graded your answer:</span>
+                        </div>
+                    <div className="text-[hsl(var(--secondary))] text-center text-[30px]">{queryResponse?.toString()}</div>
+                </div>
+            )}
         </div>
     )
 
