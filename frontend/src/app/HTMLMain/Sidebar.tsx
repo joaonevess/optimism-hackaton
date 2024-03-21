@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Demo } from "../page";
 import { ethers } from "ethers";
+import Education from "@/components/svgs/education";
 
 interface SidebarProps {
     signer: ethers.JsonRpcSigner | undefined
@@ -61,7 +62,7 @@ export default function Sidebar(props: React.PropsWithChildren<SidebarProps>) {
     return (
         <div className={"w-full flex flex-row justify-between items-center"}>
             <div className="flex flex-col" style={leftButtonCointainerStyle}>
-                <Button className={!signer ? "hidden" : "rounded-full"} style={topButtonStyle} onClick={() => setCurrDemo(Demo.education)}>🎓</Button>
+                <Button className={!signer ? "hidden" : "rounded-full"} style={topButtonStyle} onClick={() => setCurrDemo(Demo.education)}><Education className="stroke-[hsl(var(--secondary))] fill-none"/></Button>
                 <Button className={!signer ? "hidden" : "rounded-full"} style={bottomButtonStyle} onClick={() => setCurrDemo(Demo.logistiscs)}>⛟</Button>
             </div>
             {children}
