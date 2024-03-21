@@ -15,9 +15,8 @@ interface HTMLMainProps {
 }
 
 export default function HTMLMain({className, setSigner, signer, currDemo, setCurrDemo} : HTMLMainProps) {
-    const [isLogin, setIsLogin] = useState(true)
     const selectDemoMain = () => {
-        if (isLogin) return <LoginDemo setSigner={setSigner} setCurrDemo={setCurrDemo}/>
+        if (currDemo === Demo.login || !signer) return <LoginDemo setSigner={setSigner} setCurrDemo={setCurrDemo}/>
         switch (currDemo) {
             case Demo.login:
                 return <LoginDemo setSigner={setSigner} setCurrDemo={setCurrDemo}/>
@@ -31,11 +30,7 @@ export default function HTMLMain({className, setSigner, signer, currDemo, setCur
                 return <div> Privacy </div>
         }
     }
-    useEffect(() => {
-        setIsLogin(currDemo === Demo.login || !signer) // TODO: improve
-    }, [currDemo, signer])
-    
-    // TODO: match actual distances. Align things up?
+
     // TODO: add actual .svg icons
     return (
         <main className={`${className} w-full`}>
