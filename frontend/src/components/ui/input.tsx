@@ -3,6 +3,7 @@
 import * as React from "react";
 import { useMotionTemplate, useMotionValue, motion } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { useTheme } from "next-themes";
 
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {}
@@ -64,7 +65,9 @@ interface TextAreaInterface
 
 const TextArea = (
     ({ className, ...props } : TextAreaInterface) => {
-      const radius = 125; // change this to increase the rdaius of the hover effect
+      const { theme, setTheme } = useTheme();
+
+      const radius = theme === "light" ? 125 : 175; // change this to increase the rdaius of the hover effect
       const [visible, setVisible] = React.useState(false);
   
       let mouseX = useMotionValue(0);

@@ -10,7 +10,7 @@ const Education = (props: SVGProps<SVGSVGElement>) => (
   >
     <style>
       {
-        ".st0{fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10}"
+        ".st0{fill:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10}"
       }
     </style>
     <path d="M16 4 1 12l15 8 15-8z" className="st0" />
