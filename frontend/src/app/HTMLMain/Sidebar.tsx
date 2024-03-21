@@ -28,9 +28,6 @@ export default function Sidebar(props: React.PropsWithChildren<SidebarProps>) {
 
     const buttonXDistance = Math.round((pageWidth - x - buttonSize) / 2) // x/y = m
 
-
-    console.log(buttonXDistance)
-
     const buttonContainerStyle = {
         paddingLeft: buttonXDistance,
         paddingRight: buttonXDistance,

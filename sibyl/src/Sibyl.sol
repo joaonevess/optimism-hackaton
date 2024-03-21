@@ -16,7 +16,7 @@ contract Sibyl is AccessControl, Pausable {
 
 
     event QueryCompleted(
-        uint256 indexed requestId,
+        uint256 indexed requestId
         );
 
     struct Query {

@@ -9,7 +9,7 @@ export interface QueryProps {
     options?: {value: bigint}
 }
 
-export type QueryResponse = bigint | string | boolean
+export type QueryResponse = any
 
 export function Query({signer, question, setQueryResponse, model = 1, responseType = 1, options = {value: ethers.parseEther("1.0")}} : QueryProps) : Promise<any> | undefined{
     try {
@@ -21,6 +21,11 @@ export function Query({signer, question, setQueryResponse, model = 1, responseTy
             sibylAbi.abi,
             signer
         )
+        console.log(sibylAbi)
+        
+        console.log("sibyl")
+        console.log(sibyl)
+        // sibyl.registerDataProvider("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266")
 
         const filter = sibyl.filters.QueryRequested(null, question, model, responseType)
 
@@ -30,9 +35,17 @@ export function Query({signer, question, setQueryResponse, model = 1, responseTy
             console.log(requestId)
             const filter2 = sibyl.filters.QueryCompleted(requestId)
             sibyl.once(filter2, (response) => { 
-                const queryResult = response.args[1]
-                setQueryResponse(queryResult)
+                sibyl.readResponse(requestId).then((queryResult) => {
+                    console.log("queryResult")
+                    console.log(queryResult[responseType])
+                    setQueryResponse(queryResult[responseType])
+                })
             })
+
+            sibyl.fulfillRequest(requestId, [requestId, "Paris", false]).then((tx) => {
+                console.log(tx)
+            })
+
         })
 
         return sibyl.query(question, model, responseType, options)
