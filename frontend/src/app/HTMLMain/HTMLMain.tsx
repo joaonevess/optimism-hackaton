@@ -1,7 +1,7 @@
 import { ethers } from "ethers";
 import { Demo } from "../page";
-import LoginDemo from "./DemoMain/LoginDemo";
-import EducationDemo from "./DemoMain/EducationDemo";
+import LoginDemo from "./Demos/LoginDemo";
+import EducationDemo from "./Demos/EducationDemo";
 import Sidebar from "./Sidebar";
 
 interface HTMLMainProps {
