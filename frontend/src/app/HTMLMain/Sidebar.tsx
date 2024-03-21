@@ -17,7 +17,7 @@ export default function Sidebar(props: React.PropsWithChildren<SidebarProps>) {
 
     // All distances and sizes themed around phi and 12, since they were sacred numbers for the ancient greek
     const phi = 1.61803398875
-    const buttonSize = 12 * 12 //px
+    const buttonSize = 12 * 12
     const iconSize = Math.round(buttonSize / phi)
 
     const buttonHalfYDistance = Math.round(buttonSize * phi)
