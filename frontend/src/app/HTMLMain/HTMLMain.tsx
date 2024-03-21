@@ -1,3 +1,5 @@
+"use client"
+
 import { ethers } from "ethers";
 import LoginDemo from "./Demos/LoginDemo";
 import EducationDemo from "./Demos/EducationDemo";

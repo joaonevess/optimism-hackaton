@@ -1,8 +1,4 @@
-"use client"
-
-import { useState } from "react";
 import Header from "./Header/Header";
-import { ethers } from "ethers";
 import HTMLMain from "./HTMLMain/HTMLMain";
 
 

@@ -1,9 +1,9 @@
 "use client"
 
 import { Button } from "@/components/ui/button";
-import { Demo } from "../page";
 import { ethers } from "ethers";
 import Education from "@/components/svgs/education";
+import { Demo } from "./HTMLMain";
 
 interface SidebarProps {
     signer: ethers.JsonRpcSigner | undefined
