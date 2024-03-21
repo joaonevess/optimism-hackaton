@@ -31,7 +31,7 @@ export default function EducationDemo({ signer }: EducationDemoProps) {
 
     return (
         <div className="my-8">
-            <div className="bg-gradient-to-r from-transparent via-[hsl(var(--accent))] dark:via-neutral-700 to-transparent my-8 h-[1px] w-full" />
+            <div className="bg-gradient-to-r from-transparent via-[hsl(var(--accent))]  to-transparent my-8 h-[1px] w-full" />
 
             <LabelInputContainer className="mb-4">
                 <Label htmlFor="answer">{demoQuestion}</Label>

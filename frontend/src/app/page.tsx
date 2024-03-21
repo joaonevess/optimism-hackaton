@@ -18,17 +18,13 @@ export enum Demo {
 export default function Home() {
   const [signer, setSigner] = useState<ethers.JsonRpcSigner | undefined>(undefined)
   const [currDemo, setCurrDemo] = useState<Demo>(Demo.login)
-
-  // TODO: Add a theme change button. Ideally, use a greek moon and sun icon.
+  
   // TODO: fix flow for when user disconnects wallet from wallet itself.
   return (
     <div className="main-div flex flex-col min-h-dvh items-center justify-between ">
-      {/* <Header className="main-div-auth-child" setSigner={setSigner} hasWallet={hasWallet} signer={signer}/> */}
-      <div className="main-div-auth-child"></div>
+      <Header className="main-div-auth-child" />
       <HTMLMain className="main-div-auth-child" setSigner={setSigner} signer={signer} currDemo={currDemo} setCurrDemo={setCurrDemo}/>
-      <footer className="bg-[#0000ff] main-div-auth-child">
-        placeholder footer
-      </footer>
+      <div className="main-div-auth-child" />
     </div>
   );
 }

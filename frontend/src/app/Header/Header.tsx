@@ -1,20 +1,26 @@
-import { ethers } from "ethers";
-import ConnectWalletButton from "./ConnectWalletButton";
-import TestSendRequest from "./TestSendRequest";
+import { Switch } from "@/components/ui/switch";
+import { useTheme } from "next-themes";
 
 interface HeaderProps {
     className: string
-    setSigner: (signer: ethers.JsonRpcSigner | undefined) => void
-    hasWallet: boolean
-    signer: ethers.JsonRpcSigner | undefined
 }
-// DEPRECATED
-export default function Header({className, setSigner, hasWallet, signer} : HeaderProps) {
+
+export default function Header({className} : HeaderProps) {
+    const { theme, setTheme } = useTheme()
+
+    const changeTheme = () => {
+        if (theme === "light") {
+            setTheme("dark")
+        } else {
+            setTheme("light")
+        }
+    }
+
     return (
-        <header className={`${className} flex-row flex-nowrap justify-between w-full px-10 py-5`}>
-            {/* <div>Logo</div> */}
-            <TestSendRequest signer={signer} />
-            <ConnectWalletButton setSigner={setSigner} hasWallet={hasWallet} signer={signer}/>
-        </header>
+        <div className={`${className} flex items-center space-x-2 py-3`}>
+            <span>Ἥλιος </span>
+            <Switch id="theme" checked={theme==="dark"} onCheckedChange={changeTheme}/>
+            <span>Σελήνη</span>
+        </div>
     )
 }
