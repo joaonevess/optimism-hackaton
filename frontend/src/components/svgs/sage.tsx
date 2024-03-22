@@ -1,6 +1,6 @@
 import * as React from "react"
 import { SVGProps } from "react"
-const Forecast = (props: SVGProps<SVGSVGElement>) => (
+const Sage = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
@@ -16,4 +16,4 @@ const Forecast = (props: SVGProps<SVGSVGElement>) => (
     <path d="M573 183.4c-11.2 2.4-21.1 10.8-25.1 21.5-2.8 7.6-2.4 20.5.9 27.2 3.4 7 8.4 12.2 15.4 16 6 3.2 6.8 3.4 16.3 3.4s10.3-.2 16.3-3.4c7-3.8 12-9 15.4-16 3.3-6.7 3.7-19.6.9-27.2-4-10.6-13.6-18.9-25-21.5-6.6-1.6-7.9-1.6-15.1 0z" />
   </svg>
 )
-export default Forecast
+export default Sage

@@ -5,15 +5,15 @@ import LoginDemo from "./Demos/LoginDemo";
 import EducationDemo from "./Demos/EducationDemo";
 import Sidebar from "./Sidebar";
 import { useState } from "react";
-import ForecastDemo from "./Demos/ForecastDemo";
 import ComplianceDemo from "./Demos/ComplianceDemo";
 import JudgeDemo from "./Demos/JudgeDemo";
+import SageDemo from "./Demos/SageDemo";
 
 export enum Demo {
     login,
     education,
     compliance,
-    forecast,
+    sage,
     judge,
   }
 
@@ -33,10 +33,10 @@ export default function HTMLMain({className} : HTMLMainProps) {
                 return <EducationDemo signer={signer}/>
             case Demo.compliance:
                 return <ComplianceDemo signer={signer}/>
-            case Demo.forecast:
-                return <ForecastDemo signer={signer}/>
             case Demo.judge:
                 return <JudgeDemo signer={signer}/>
+            case Demo.sage:
+                return <SageDemo signer={signer}/>
         }
     }
 

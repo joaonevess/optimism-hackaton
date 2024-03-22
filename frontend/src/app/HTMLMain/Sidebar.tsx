@@ -6,7 +6,7 @@ import Education from "@/components/svgs/education";
 import { Demo } from "./HTMLMain";
 import Compliance from "@/components/svgs/compliance";
 import Judge from "@/components/svgs/judge";
-import Forecast from "@/components/svgs/forecast";
+import Sage from "@/components/svgs/sage";
 
 interface SidebarProps {
     signer: ethers.JsonRpcSigner | undefined
@@ -70,8 +70,8 @@ export default function Sidebar(props: React.PropsWithChildren<SidebarProps>) {
             </div>
             {children}
             <div className="flex flex-col" style={rightButtonContainerStyle}>
-                <Button className={!signer ? "hidden" : "rounded-full"} style={topButtonStyle} onClick={() => setCurrDemo(Demo.forecast)}><Forecast className="stroke-[hsl(var(--foreground))]"/></Button>
-                <Button className={!signer ? "hidden" : "rounded-full"} style={bottomButtonStyle} onClick={() => setCurrDemo(Demo.judge)}><Judge className="stroke-[hsl(var(--foreground))]"/></Button>
+                <Button className={!signer ? "hidden" : "rounded-full"} style={topButtonStyle} onClick={() => setCurrDemo(Demo.judge)}><Judge className="stroke-[hsl(var(--foreground))]"/></Button>
+                <Button className={!signer ? "hidden" : "rounded-full"} style={bottomButtonStyle} onClick={() => setCurrDemo(Demo.sage)}><Sage className="stroke-[hsl(var(--foreground))]"/></Button>
             </div>
         </div>
 
