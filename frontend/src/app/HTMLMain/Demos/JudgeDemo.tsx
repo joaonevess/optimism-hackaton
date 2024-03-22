@@ -11,7 +11,7 @@ import { useState } from "react";
 
 /* 
 Explanation of use case:
-Legal disputes can often be costly and time consuming. In some cases, it might even be biased. By using a decentralized oracle, we can guarantee a fair and unbiased resolution of legal disputes.
+Legal disputes can often be costly and time consuming. In some cases, it might even be biased. By using a decentralized oracle, we can guarantee a fair, transparent, and unbiased resolution of legal disputes.
 In this demo, a standard Brazilian rent contract is provided to the oracle and it shall judge based on the situation provided. This can be extended to any legal contract.
 
 Example of usecases:
