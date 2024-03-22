@@ -20,16 +20,17 @@ export default function Sidebar(props: React.PropsWithChildren<SidebarProps>) {
     const [pageWidth, setPageWidth] = useState<number>(1)
     const { theme, setTheme } = useTheme()
 
+    const hasWindow = typeof window !== "undefined"
     // TODO: Make this reactive
-    if (typeof window !== "undefined") {
-        useEffect(() => {
+    useEffect(() => {
+        if (typeof window !== "undefined") {
             setPageWidth(window.innerWidth)
-        }, [])
-        window.addEventListener("resize", () => {
-            setPageWidth(window.innerWidth)
-        })
-    }
-
+            window.addEventListener("resize", () => {
+                setPageWidth(window.innerWidth)
+            })
+        }
+    }, [hasWindow])
+        
 
     // All distances and sizes themed around phi and 12, since they were sacred numbers for the ancient greek
     const phi = 1.61803398875
