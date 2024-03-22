@@ -1,3 +1,5 @@
+"use client"
+
 import Metamask from "@/components/svgs/metamask"
 import { Button } from "@/components/ui/button"
 import { ethers } from "ethers"
@@ -15,14 +17,12 @@ export default function LoginDemo({setSigner, setCurrDemo} : LoginDemoProps) {
     const firstDemo = Demo.education
 
     // window.ethereum will exist if user has EIP-1193 wallet installed
-    // @ts-ignore
-    if (window && window.ethereum && !hasWallet) {
+    if (typeof window !== "undefined" && window.ethereum && !hasWallet) {
         setHasWallet(true)
     }
 
     const connectWallet = () => {
         try {
-            // @ts-ignore
             const provider = new ethers.BrowserProvider(window.ethereum)
             console.log(provider)
             provider.getSigner().then((providedSigner) => {

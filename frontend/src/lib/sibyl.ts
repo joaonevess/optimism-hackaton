@@ -45,9 +45,9 @@ export function Query({signer, question, setQueryResponse, responseType = 0, opt
             })
 
             // Mock answer
-            sibyl.fulfillRequest(requestId, [ethers.toBigInt(73), "Paris", false]).then((tx) => {
-                console.log(tx)
-            })
+            // sibyl.fulfillRequest(requestId, [ethers.toBigInt(73), "Paris", false]).then((tx) => {
+            //     console.log(tx)
+            // })
 
         })
 
