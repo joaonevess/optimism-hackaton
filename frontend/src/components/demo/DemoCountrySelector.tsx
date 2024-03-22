@@ -19,14 +19,13 @@ export const DemoCountrySelector = ({setCountry} : DemoCountrySelectorProps) => 
 
 
     return (
-    <Select>
+    <Select onValueChange={(v) => setCountry(v)}>
         <SelectTrigger className="w-[180px] bg-[hsl(var(--popover))]">
-          <SelectValue placeholder="Country to comply" />
+          <SelectValue placeholder="Select a country" />
         </SelectTrigger>
         <SelectContent>
           <SelectGroup className="main-div-auth-child">
             <SelectLabel>Country</SelectLabel>
-            {/* {items.map((node, index) => (<React.Fragment key={index}>{node}</React.Fragment>))} */}
             {items}
           </SelectGroup>
         </SelectContent>

@@ -9,7 +9,7 @@ import { BottomGradient, LabelInputContainer } from "@/components/ui/utils";
 import { Query, QueryResponse, ResponseType } from "@/lib/sibyl";
 import { Label } from "@radix-ui/react-label";
 import { ethers } from "ethers";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 /*
 Explanation of use case:
@@ -53,14 +53,14 @@ export default function ComplianceDemo({ signer }: ComplianceDemoProps) {
         Query(queryInfo)
     }
 
-
     return (
         <div className="my-8">
             <DemoSeparator/>
 
             <LabelInputContainer className="mb-4">
-                <Label htmlFor="answer">{demoHeader}</Label>
+                <Label htmlFor="answer">Country to verify</Label>
                 <DemoCountrySelector setCountry={setCountry}/>
+                <Label htmlFor="answer">{demoHeader}</Label>
                 <DemoTextArea setValue={setContract} placeholder="Your clauses"/>
             </LabelInputContainer>
 
