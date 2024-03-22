@@ -30,7 +30,7 @@ export default function JudgeDemo({ signer }: JudgeDemoProps) {
     const demoHeader = "Explain the situation:"
 
     const judgeDemoRequest = () => {
-        const finalQuestion = `Two Brazilians have signed this contract:\n${rentContract}\nAnd have found themselves in this situation:\n${context}\nWho is right? reply only with the address of the person who is right.`
+        const finalQuestion = `Two Brazilians have signed this contract:\n${rentContract}\nAnd have found themselves in this situation:\n${context}\nWho is right? reply only with "Locador" or "Locatário", representing the person who is right.`
 
         const queryInfo = {
             signer: signer,
