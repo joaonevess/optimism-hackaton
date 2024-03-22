@@ -1,3 +1,7 @@
+import DemoButton from "@/components/demo/DemoButton";
+import DemoResponse from "@/components/demo/DemoResponse";
+import DemoSeparator from "@/components/demo/DemoSeparator";
+import DemoTextArea from "@/components/demo/DemoTextArea";
 import { Button } from "@/components/ui/button";
 import { TextArea } from "@/components/ui/input";
 import { BottomGradient, LabelInputContainer } from "@/components/ui/utils";
@@ -22,7 +26,7 @@ interface ComplianceDemoProps {
 }
 
 export default function ComplianceDemo({ signer }: ComplianceDemoProps) {
-    const [queryResponse, setQueryResponse] = useState<QueryResponse | undefined>()
+    const [queryResponse, setQueryResponse] = useState<string | undefined>()
     const [contract, setContract] = useState<string>("")
     const [country, setCountry] = useState<string>("China")
 
@@ -31,11 +35,19 @@ export default function ComplianceDemo({ signer }: ComplianceDemoProps) {
     const complianceDemoRequest = () => {
         const finalQuestion = "Is the following contractual clause compliant with the laws of " + country + "?\n" + contract
 
+        const evalResponse = (response: boolean) => {
+            if (response) {
+                setQueryResponse("Compliant")
+            } else {
+                setQueryResponse("Not compliant")
+            }
+        }
+
         const queryInfo = {
             signer: signer,
             question: finalQuestion,
             responseType: ResponseType.BOOLEAN,
-            setQueryResponse: setQueryResponse,
+            setQueryResponse: evalResponse,
         }
         Query(queryInfo)
     }
@@ -43,31 +55,22 @@ export default function ComplianceDemo({ signer }: ComplianceDemoProps) {
 
     return (
         <div className="my-8">
-        <div className="bg-gradient-to-r from-transparent via-[hsl(var(--accent))] to-transparent my-8 h-[1px] w-full" />
+            <DemoSeparator/>
 
-        <LabelInputContainer className="mb-4">
-            <Label htmlFor="answer">{demoHeader}</Label>
-            {/* TODO: Add a country selector here */}
-            <TextArea id="answer" placeholder="Your answer" className="w-[300px] h-[300px] p-10 break-all" onChange={(v) => setContract(v.target.value)}/>
-        </LabelInputContainer>
+            <LabelInputContainer className="mb-4">
+                <Label htmlFor="answer">{demoHeader}</Label>
+                {/* TODO: Add a country selector here */}
+                <DemoTextArea setValue={setContract} placeholder="Your clauses"/>
+            </LabelInputContainer>
 
-        <Button
-            className="bg-gradient-to-br relative group/btn from-[hsl(var(--secondary))] to-[hsl(var(--secondary))] text-[hsl(var(--background))] block w-full rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset]"
-            onClick = {() => complianceDemoRequest()}
-        >
-            Ask the oracle
-            <BottomGradient />
-        </Button>
-        <div className="bg-gradient-to-r from-transparent via-[hsl(var(--accent))] to-transparent my-8 h-[1px] w-full" />
-        {queryResponse !== undefined && (
-            <div>
-                <div className="text-center">
-                    <span className="text-[hsl(var(--accent))] font-bold">Sibyl </span>
-                    <span>thinks this contract is:</span>
-                    </div>
-                <div className="text-[hsl(var(--secondary))] text-center text-[30px]">{queryResponse !==undefined && queryResponse ? "Compliant" : "Non-compliant"}</div>
-            </div>
-        )}
-    </div>
+            <DemoButton onClick={complianceDemoRequest}>
+                Check compliance
+            </DemoButton>
+
+            <DemoSeparator/>
+            
+            <DemoResponse queryResponse={queryResponse} introText="thinks these clauses are:"/>
+
+        </div>
     )
 }
