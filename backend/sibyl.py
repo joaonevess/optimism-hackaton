@@ -13,7 +13,7 @@ async def setup():
         abi = json.load(abi_file)["abi"]
     with open("./abi/SibylDeployment.json", "r") as deployment_file:
         deployment_info = json.load(deployment_file)
-    
+
     contract_deployer_address = deployment_info["deployer"]
     contract_address = deployment_info["deployedTo"]
 
@@ -52,9 +52,9 @@ async def fulfill_request(
     tx_hash = await sibyl.functions.fulfillRequest(
         query_requested_event.requestId,
         (
+            response_dict["boolResponse"],
             response_dict["integerResponse"],
             response_dict["stringResponse"],
-            response_dict["boolResponse"],
         ),
     ).transact()
     print(f"Tx hash: {tx_hash.hex()}")
@@ -67,6 +67,9 @@ async def cancel_pending_request(sibyl, query_requested_event: QueryRequestedEve
     ).transact()
     print(f"Tx hash: {tx_hash.hex()}")
     return tx_hash
+
+
+import time
 
 
 async def handle_events(sibyl, async_callback):
@@ -88,6 +91,7 @@ async def handle_events(sibyl, async_callback):
             except Exception as e:
                 print(f"Error getting response from LLM: {e}")
                 await cancel_pending_request(sibyl, query_requested)
+        time.sleep(1)
 
 
 # TEST FUNCTIONS. These are not part of the main application

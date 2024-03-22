@@ -35,9 +35,9 @@ contract Sibyl is AccessControl, Pausable {
     }
 
     struct Response {
+        bool boolResponse;
         uint256 integerResponse;
         string stringResponse;
-        bool boolResponse;
     }
 
     uint256 pricePerInputChar;
@@ -60,7 +60,7 @@ contract Sibyl is AccessControl, Pausable {
         requests[requestId] = Query(
             question,
             RequestStatus.Pending,
-            Response(0, "", false),
+            Response(false, 0, ""),
             responseType
         );
         emit QueryRequested(requestId, question, responseType, msg.sender);
