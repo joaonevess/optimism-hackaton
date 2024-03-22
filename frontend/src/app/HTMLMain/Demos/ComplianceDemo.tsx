@@ -7,6 +7,7 @@ import { Query, ResponseType } from "@/lib/sibyl";
 import { Label } from "@radix-ui/react-label";
 import { ethers } from "ethers";
 import { useState } from "react";
+import { LabelInputContainer } from "@/components/ui/utils";
 
 /*
 Explanation of use case:
@@ -52,22 +53,22 @@ export default function ComplianceDemo({ signer }: ComplianceDemoProps) {
 
     return (
         <div className="my-8">
-            <DemoSeparator/>
+            <DemoSeparator />
 
             <LabelInputContainer className="mb-4">
                 <Label htmlFor="answer">Country to verify</Label>
-                <DemoCountrySelector setCountry={setCountry}/>
+                <DemoCountrySelector setCountry={setCountry} />
                 <Label htmlFor="answer">{demoHeader}</Label>
-                <DemoTextArea setValue={setContract} placeholder="Your clauses"/>
+                <DemoTextArea setValue={setContract} placeholder="Your clauses" />
             </LabelInputContainer>
 
             <DemoButton onClick={complianceDemoRequest}>
                 Check compliance
             </DemoButton>
 
-            <DemoSeparator/>
-            
-            <DemoResponse queryResponse={queryResponse} introText="thinks these clauses are:"/>
+            <DemoSeparator />
+
+            <DemoResponse queryResponse={queryResponse} introText="thinks these clauses are:" />
 
         </div>
     )
