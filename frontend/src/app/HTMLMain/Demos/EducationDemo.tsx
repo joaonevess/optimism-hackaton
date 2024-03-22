@@ -28,8 +28,8 @@ export default function EducationDemo({ signer }: EducationDemoProps) {
 
     const demoQuestion = "What was the French Revolution?"
 
-    const educationDemoRequest = (answer: string) => {
-        const finalQuestion = "Evaluate the answer to this question with a grade between 0 and 100: \n" +  demoQuestion + "\n" + answer
+    const educationDemoRequest = () => {
+        const finalQuestion = "Evaluate the answer to this question with a grade between 0 and 100: \n" +  demoQuestion + "\n" + currentAnswer
 
         const queryInfo = {
             signer: signer,
@@ -51,7 +51,7 @@ export default function EducationDemo({ signer }: EducationDemoProps) {
 
             <Button
                 className="bg-gradient-to-br relative group/btn from-[hsl(var(--secondary))] to-[hsl(var(--secondary))] text-[hsl(var(--background))] block w-full rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset]"
-                onClick = {() => educationDemoRequest(currentAnswer)}
+                onClick = {() => educationDemoRequest()}
             >
                 Ask the oracle
                 <BottomGradient />
