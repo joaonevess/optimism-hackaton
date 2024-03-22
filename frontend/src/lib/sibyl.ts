@@ -5,22 +5,22 @@ export interface QueryProps {
     question: string
     setQueryResponse: (response: any) => void
     responseType?: number
-    options?: {value: bigint}
+    options?: { value: bigint }
 }
 
 export enum ResponseType {
+    BOOLEAN,
     BIGINT,
-    STR,
-    BOOLEAN
+    STR
 }
 
 export type QueryResponse = bigint | string | boolean
 
-export function Query({signer, question, setQueryResponse, responseType = 0, options = {value: ethers.parseEther("1.0")}} : QueryProps) : Promise<any> | undefined{
+export function Query({ signer, question, setQueryResponse, responseType = 0, options = { value: ethers.parseEther("1.0") } }: QueryProps): Promise<any> | undefined {
     try {
         const sibylAbi = require("@/lib/Sibyl.json")                        // contract info
         const sibylDeploymentInfo = require("@/lib/SibylDeployment.json")   // deployment info
-        
+
         const sibyl = new ethers.Contract(
             sibylDeploymentInfo.deployedTo,
             sibylAbi.abi,
@@ -36,7 +36,7 @@ export function Query({signer, question, setQueryResponse, responseType = 0, opt
             console.log("Request ID:")
             console.log(requestId)
             const filter2 = sibyl.filters.QueryCompleted(requestId)
-            sibyl.once(filter2, (_response) => { 
+            sibyl.once(filter2, (_response) => {
                 sibyl.readResponse(requestId).then((queryResult) => {
                     console.log("queryResult")
                     console.log(queryResult[responseType])
