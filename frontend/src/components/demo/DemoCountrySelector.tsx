@@ -14,9 +14,7 @@ export const DemoCountrySelector = ({setCountry} : DemoCountrySelectorProps) => 
         setItems(Object.values(countries).sort((a, b) => a.name.localeCompare(b.name)).map((country) => 
                 (<SelectItem value={country.name} key={country.name}>{country.name}</SelectItem>)
                 ))
-            
     }, [])
-
 
     return (
     <Select onValueChange={(v) => setCountry(v)}>
