@@ -7,6 +7,7 @@ import { Demo } from "./HTMLMain";
 import Compliance from "@/components/svgs/compliance";
 import Judge from "@/components/svgs/judge";
 import Sage from "@/components/svgs/sage";
+import { useTheme } from "next-themes";
 
 interface SidebarProps {
     signer: ethers.JsonRpcSigner | undefined
@@ -15,6 +16,7 @@ interface SidebarProps {
 
 export default function Sidebar(props: React.PropsWithChildren<SidebarProps>) {
     const { signer, setCurrDemo, children } = props
+    const { theme, setTheme } = useTheme()
 
     // TODO: Make this reactive
     const pageWidth = window.innerWidth;
@@ -62,6 +64,8 @@ export default function Sidebar(props: React.PropsWithChildren<SidebarProps>) {
         marginBottom: 0,
     }
 
+    const sageClass = theme === "dark" ? "stroke-[hsl(var(--foreground))]" : "stroke-[hsl(var(--foreground))] fill-[hsl(var(--foreground))]"
+
     return (
         <div className={"w-full flex flex-row justify-between items-center"}>
             <div className="flex flex-col" style={leftButtonCointainerStyle}>
@@ -71,7 +75,7 @@ export default function Sidebar(props: React.PropsWithChildren<SidebarProps>) {
             {children}
             <div className="flex flex-col" style={rightButtonContainerStyle}>
                 <Button className={!signer ? "hidden" : "rounded-full"} style={topButtonStyle} onClick={() => setCurrDemo(Demo.judge)}><Judge className="stroke-[hsl(var(--foreground))]"/></Button>
-                <Button className={!signer ? "hidden" : "rounded-full"} style={bottomButtonStyle} onClick={() => setCurrDemo(Demo.sage)}><Sage className="stroke-[hsl(var(--foreground))]"/></Button>
+                <Button className={!signer ? "hidden" : "rounded-full"} style={bottomButtonStyle} onClick={() => setCurrDemo(Demo.sage)}><Sage className={sageClass}/></Button>
             </div>
         </div>
 
