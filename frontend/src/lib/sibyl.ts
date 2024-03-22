@@ -8,7 +8,7 @@ export interface QueryProps {
     options?: {value: bigint}
 }
 
-export enum responseType {
+export enum ResponseType {
     BIGINT,
     STR,
     BOOLEAN

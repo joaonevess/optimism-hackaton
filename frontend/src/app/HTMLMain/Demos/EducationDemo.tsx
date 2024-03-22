@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { TextArea } from "@/components/ui/input"
 import { LabelInputContainer, BottomGradient } from "@/components/ui/utils"
-import { Query, QueryResponse, responseType } from "@/lib/sibyl"
+import { Query, QueryResponse, ResponseType } from "@/lib/sibyl"
 import { Label } from "@radix-ui/react-label"
 import { ethers } from "ethers"
 import { useState } from "react"
@@ -34,7 +34,7 @@ export default function EducationDemo({ signer }: EducationDemoProps) {
         const queryInfo = {
             signer: signer,
             question: finalQuestion,
-            responseType: responseType.BIGINT,
+            responseType: ResponseType.BIGINT,
             setQueryResponse: setQueryResponse,
         }
         Query(queryInfo)
