@@ -31,6 +31,8 @@ export function Query({ signer, question, setQueryResponse, responseType = 0, op
     // If this works, it's probably for the reason you think :)
     sibyl.once(filter, (event) => {
         const requestId = event.args[0]
+        console.log("Request ID:")
+        console.log(requestId)
 
         hardCheck(sibyl, requestId, responseType, setQueryResponse)
 
@@ -43,8 +45,6 @@ export function Query({ signer, question, setQueryResponse, responseType = 0, op
         // })
 
 
-        // console.log("Request ID:")
-        // console.log(requestId)
                 
         // const filter2 = sibyl.filters.QueryCompleted(requestId)
 
@@ -76,7 +76,7 @@ const hardCheck = (sibyl: any, requestId: any, responseType: any, setQueryRespon
     .catch((error: any) => {
         console.log("error")
         console.log(error)
-        setTimeout(() => hardCheck(sibyl, requestId, responseType, setQueryResponse), 1000)
+        setTimeout(() => hardCheck(sibyl, requestId, responseType, setQueryResponse), 2000)
     })
 }
 
