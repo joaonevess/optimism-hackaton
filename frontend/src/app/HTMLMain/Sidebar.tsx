@@ -70,7 +70,7 @@ export default function Sidebar(props: React.PropsWithChildren<SidebarProps>) {
             </div>
             {children}
             <div className="flex flex-col" style={rightButtonContainerStyle}>
-                <Button className={!signer ? "hidden" : "rounded-full"} style={topButtonStyle} onClick={() => setCurrDemo(Demo.forecast)}><Forecast className="fill-[hsl(var(--foreground))]"/></Button>
+                <Button className={!signer ? "hidden" : "rounded-full"} style={topButtonStyle} onClick={() => setCurrDemo(Demo.forecast)}><Forecast className="stroke-[hsl(var(--foreground))]"/></Button>
                 <Button className={!signer ? "hidden" : "rounded-full"} style={bottomButtonStyle} onClick={() => setCurrDemo(Demo.judge)}><Judge className="stroke-[hsl(var(--foreground))]"/></Button>
             </div>
         </div>
