@@ -1,6 +1,8 @@
-import { Button } from "@/components/ui/button"
-import { TextArea } from "@/components/ui/input"
-import { LabelInputContainer, BottomGradient } from "@/components/ui/utils"
+import DemoButton from "@/components/demo/DemoButton"
+import DemoResponse from "@/components/demo/DemoResponse"
+import DemoSeparator from "@/components/demo/DemoSeparator"
+import DemoTextArea from "@/components/demo/DemoTextArea"
+import { LabelInputContainer } from "@/components/ui/utils"
 import { Query, QueryResponse, ResponseType } from "@/lib/sibyl"
 import { Label } from "@radix-ui/react-label"
 import { ethers } from "ethers"
@@ -42,30 +44,20 @@ export default function EducationDemo({ signer }: EducationDemoProps) {
 
     return (
         <div className="my-8">
-            <div className="bg-gradient-to-r from-transparent via-[hsl(var(--accent))] to-transparent my-8 h-[1px] w-full" />
+            <DemoSeparator/>
 
             <LabelInputContainer className="mb-4">
                 <Label htmlFor="answer">{demoQuestion}</Label>
-                <TextArea id="answer" placeholder="Your answer" className="w-[300px] h-[300px] p-10 break-all" onChange={(v) => setCurrentAnswer(v.target.value)}/>
+                <DemoTextArea placeholder="Your answer" setValue={setCurrentAnswer}/>
             </LabelInputContainer>
 
-            <Button
-                className="bg-gradient-to-br relative group/btn from-[hsl(var(--secondary))] to-[hsl(var(--secondary))] text-[hsl(var(--background))] block w-full rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset]"
-                onClick = {() => educationDemoRequest()}
-            >
-                Ask the oracle
-                <BottomGradient />
-            </Button>
-            <div className="bg-gradient-to-r from-transparent via-[hsl(var(--accent))] to-transparent my-8 h-[1px] w-full" />
-            {queryResponse !== undefined && (
-                <div>
-                    <div className="text-center">
-                        <span className="text-[hsl(var(--accent))] font-bold">Sibyl </span>
-                        <span>has graded your answer:</span>
-                        </div>
-                    <div className="text-[hsl(var(--secondary))] text-center text-[30px]">{queryResponse?.toString()}</div>
-                </div>
-            )}
+            <DemoButton onClick={educationDemoRequest}>
+                Grade this answer
+            </DemoButton>
+
+            <DemoSeparator/>
+            
+            <DemoResponse queryResponse={queryResponse?.toString()} introText="has graded your answer:"/>
         </div>
     )
 
