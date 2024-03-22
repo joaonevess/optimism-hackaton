@@ -6,10 +6,6 @@ import { Label } from "@radix-ui/react-label"
 import { ethers } from "ethers"
 import { useState } from "react"
 
-interface EducationDemoProps {
-    signer: ethers.JsonRpcSigner
-}
-
 /*
 Explanation of use case:
 Grading of subjective questions is hard to automate. By using a decentralized oracle, we can guarantee a fair and unbiased grading of subjective questions.
@@ -21,6 +17,10 @@ Example of usecases:
 - Evaluation of tests which should be impartial and unbiased (e.g. job applications)
 - Evaluating questions where the student and the teacher disagree on the grading
 */
+
+interface EducationDemoProps {
+    signer: ethers.JsonRpcSigner
+}
 
 export default function EducationDemo({ signer }: EducationDemoProps) {
     const [queryResponse, setQueryResponse] = useState<QueryResponse | undefined>()
