@@ -9,20 +9,21 @@ load_dotenv()
 
 
 async def setup():
-    contract_deployer_address = os.environ.get("CONTRACT_DEPLOYER_ADDRESS")
-    assert contract_deployer_address, "CONTRACT_DEPLOYER_ADDRESS not set"
+    with open("./abi/Sibyl.json", "r") as abi_file:
+        abi = json.load(abi_file)["abi"]
+    with open("./abi/SibylDeployment.json", "r") as deployment_file:
+        deployment_info = json.load(deployment_file)["abi"]
+    
+    contract_deployer_address = deployment_info["deployer"]
+    contract_address = deployment_info["deployedTo"]
 
-    contract_address = os.environ.get("CONTRACT_ADDRESS")
-    assert contract_address, "CONTRACT_ADDRESS not set"
-    contract_address = w3.to_checksum_address(contract_address)
+    # contract_address = w3.to_checksum_address(contract_address) unsure what this is about so keeping it here
 
     w3 = AsyncWeb3(AsyncWeb3.AsyncHTTPProvider("http://127.0.0.1:8545"))
     w3.eth.default_account = contract_deployer_address
     assert await w3.is_connected(), "Web3 connection failed"
 
     # Define the smart contract address and ABI
-    with open("./abi/Sibyl.json", "r") as abi_file:
-        abi = json.load(abi_file)["abi"]
 
     contract = w3.eth.contract(address=contract_address, abi=abi)
     return contract
