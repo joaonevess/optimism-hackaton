@@ -37,7 +37,6 @@ export default function HTMLMain({className} : HTMLMainProps) {
                 return <ForecastDemo signer={signer}/>
             case Demo.judge:
                 return <JudgeDemo signer={signer}/>
-
         }
     }
 

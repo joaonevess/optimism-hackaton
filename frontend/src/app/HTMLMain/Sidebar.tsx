@@ -4,6 +4,9 @@ import { Button } from "@/components/ui/button";
 import { ethers } from "ethers";
 import Education from "@/components/svgs/education";
 import { Demo } from "./HTMLMain";
+import Compliance from "@/components/svgs/compliance";
+import Judge from "@/components/svgs/judge";
+import Forecast from "@/components/svgs/forecast";
 
 interface SidebarProps {
     signer: ethers.JsonRpcSigner | undefined
@@ -63,12 +66,12 @@ export default function Sidebar(props: React.PropsWithChildren<SidebarProps>) {
         <div className={"w-full flex flex-row justify-between items-center"}>
             <div className="flex flex-col" style={leftButtonCointainerStyle}>
                 <Button className={!signer ? "hidden" : "rounded-full"} style={topButtonStyle} onClick={() => setCurrDemo(Demo.education)}><Education className="stroke-[hsl(var(--foreground))] fill-none"/></Button>
-                <Button className={!signer ? "hidden" : "rounded-full"} style={bottomButtonStyle} onClick={() => setCurrDemo(Demo.compliance)}>⛟</Button>
+                <Button className={!signer ? "hidden" : "rounded-full"} style={bottomButtonStyle} onClick={() => setCurrDemo(Demo.compliance)}><Compliance className="stroke-[hsl(var(--foreground))]"/></Button>
             </div>
             {children}
             <div className="flex flex-col" style={rightButtonContainerStyle}>
-                <Button className={!signer ? "hidden" : "rounded-full"} style={topButtonStyle} onClick={() => setCurrDemo(Demo.forecast)}>🏦</Button>
-                <Button className={!signer ? "hidden" : "rounded-full"} style={bottomButtonStyle} onClick={() => setCurrDemo(Demo.judge)}>🙈</Button>
+                <Button className={!signer ? "hidden" : "rounded-full"} style={topButtonStyle} onClick={() => setCurrDemo(Demo.forecast)}><Forecast className="fill-[hsl(var(--foreground))]"/></Button>
+                <Button className={!signer ? "hidden" : "rounded-full"} style={bottomButtonStyle} onClick={() => setCurrDemo(Demo.judge)}><Judge className="stroke-[hsl(var(--foreground))]"/></Button>
             </div>
         </div>
 
