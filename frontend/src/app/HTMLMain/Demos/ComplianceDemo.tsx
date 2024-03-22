@@ -1,4 +1,5 @@
 import DemoButton from "@/components/demo/DemoButton";
+import { DemoCountrySelector } from "@/components/demo/DemoCountrySelector";
 import DemoResponse from "@/components/demo/DemoResponse";
 import DemoSeparator from "@/components/demo/DemoSeparator";
 import DemoTextArea from "@/components/demo/DemoTextArea";
@@ -59,7 +60,7 @@ export default function ComplianceDemo({ signer }: ComplianceDemoProps) {
 
             <LabelInputContainer className="mb-4">
                 <Label htmlFor="answer">{demoHeader}</Label>
-                {/* TODO: Add a country selector here */}
+                <DemoCountrySelector setCountry={setCountry}/>
                 <DemoTextArea setValue={setContract} placeholder="Your clauses"/>
             </LabelInputContainer>
 

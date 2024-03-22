@@ -21,9 +21,11 @@ export default function RootLayout({
         <link rel="icon" href="/images/favicon.ico"/>
       </head>  
       <body className={`${inter.className} overflow-hidden`}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange enableColorScheme>
-          {children}
-        </ThemeProvider>
+        <div>
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange enableColorScheme>
+            {children}
+          </ThemeProvider>
+        </div>
       </body>
     </html>
   );
