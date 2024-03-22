@@ -12,7 +12,7 @@ async def setup():
     with open("./abi/Sibyl.json", "r") as abi_file:
         abi = json.load(abi_file)["abi"]
     with open("./abi/SibylDeployment.json", "r") as deployment_file:
-        deployment_info = json.load(deployment_file)["abi"]
+        deployment_info = json.load(deployment_file)
     
     contract_deployer_address = deployment_info["deployer"]
     contract_address = deployment_info["deployedTo"]
