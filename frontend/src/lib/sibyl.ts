@@ -52,7 +52,7 @@ export function Query({ signer, question, setQueryResponse, responseType = 0, op
         sibyl.once(filter2, (_response) => {
             sibyl.readResponse(requestId).then((queryResult) => {
                 console.log("queryResult")
-                console.log(queryResult[responseType])
+                console.log(queryResult)
                 setQueryResponse(queryResult[responseType])
             })
         })
