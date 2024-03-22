@@ -17,42 +17,46 @@ export enum ResponseType {
 export type QueryResponse = bigint | string | boolean
 
 export function Query({ signer, question, setQueryResponse, responseType = 0, options = { value: ethers.parseEther("1.0") } }: QueryProps): Promise<any> | undefined {
-    try {
-        const sibylAbi = require("@/lib/Sibyl.json")                        // contract info
-        const sibylDeploymentInfo = require("@/lib/SibylDeployment.json")   // deployment info
+    const sibylAbi = require("@/lib/Sibyl.json")                        // contract info
+    const sibylDeploymentInfo = require("@/lib/SibylDeployment.json")   // deployment info
 
-        const sibyl = new ethers.Contract(
-            sibylDeploymentInfo.deployedTo,
-            sibylAbi.abi,
-            signer
-        )
+    const sibyl = new ethers.Contract(
+        sibylDeploymentInfo.deployedTo,
+        sibylAbi.abi,
+        signer
+    )
+    // sibyl.registerDataProvider("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266")
+    const filter = sibyl.filters.QueryRequested(null, null, null, signer.address)
 
-        // sibyl.registerDataProvider("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266")
+    // While this works, it's probably not for the reason you think :)
+    sibyl.once(filter, (event) => {
+        const requestId = event.args[0]
+        console.log("Request ID:")
+        console.log(requestId)
+                
+        const filter2 = sibyl.filters.QueryCompleted(requestId)
 
-        const filter = sibyl.filters.QueryRequested(null, null, null, signer.address)
-
-        sibyl.once(filter, (event) => {
-            const requestId = event.args[0]
-            console.log("Request ID:")
-            console.log(requestId)
-            const filter2 = sibyl.filters.QueryCompleted(requestId)
-            sibyl.once(filter2, (_response) => {
+        sibyl.getQueryStatus(requestId).then((status) => {
+            console.log("status")
+            console.log(status)
+            if (Number(status) === 1) {
+                console.log("reading straight away")
                 sibyl.readResponse(requestId).then((queryResult) => {
                     console.log("queryResult")
-                    console.log(queryResult[responseType])
+                    console.log(queryResult)
                     setQueryResponse(queryResult[responseType])
                 })
-            })
-
-            // Mock answer
-            // sibyl.fulfillRequest(requestId, [ethers.toBigInt(73), "Paris", false]).then((tx) => {
-            //     console.log(tx)
-            // })
-
+            }
         })
+        
+        sibyl.once(filter2, (_response) => {
+            sibyl.readResponse(requestId).then((queryResult) => {
+                console.log("queryResult")
+                console.log(queryResult[responseType])
+                setQueryResponse(queryResult[responseType])
+            })
+        })
+    })
 
-        return sibyl.query(question, responseType, options)
-    } catch (error) {
-        console.error(error)
-    }
+    return sibyl.query(question, responseType, options)
 }
