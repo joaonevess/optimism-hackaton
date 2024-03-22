@@ -36,7 +36,7 @@ export default function LoginDemo({setSigner, setCurrDemo} : LoginDemoProps) {
     }
 
     return (
-        <Button onClick={connectWallet} className="rounded-full w-[300px] h-[300px] flex align-center justify-center">
+        <Button onClick={hasWallet ? connectWallet : () => window.open("https://metamask.io/", "_blank")} className="rounded-full w-[300px] h-[300px] flex align-center justify-center">
             <Metamask className="stroke-[hsl(var(--secondary))]"/>
         </Button>
     )

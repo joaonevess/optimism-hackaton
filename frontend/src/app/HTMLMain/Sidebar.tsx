@@ -8,6 +8,7 @@ import Compliance from "@/components/svgs/compliance";
 import Judge from "@/components/svgs/judge";
 import Sage from "@/components/svgs/sage";
 import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
 
 interface SidebarProps {
     signer: ethers.JsonRpcSigner | undefined
@@ -16,10 +17,19 @@ interface SidebarProps {
 
 export default function Sidebar(props: React.PropsWithChildren<SidebarProps>) {
     const { signer, setCurrDemo, children } = props
+    const [pageWidth, setPageWidth] = useState<number>(1)
     const { theme, setTheme } = useTheme()
 
     // TODO: Make this reactive
-    const pageWidth = typeof window === "undefined" ? 1 : window.innerWidth
+    if (typeof window !== "undefined") {
+        useEffect(() => {
+            setPageWidth(window.innerWidth)
+        }, [])
+        window.addEventListener("resize", () => {
+            setPageWidth(window.innerWidth)
+        })
+    }
+
 
     // All distances and sizes themed around phi and 12, since they were sacred numbers for the ancient greek
     const phi = 1.61803398875
