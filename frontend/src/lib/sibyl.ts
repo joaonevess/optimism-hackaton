@@ -28,35 +28,55 @@ export function Query({ signer, question, setQueryResponse, responseType = 0, op
     // sibyl.registerDataProvider("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266")
     const filter = sibyl.filters.QueryRequested(null, null, null, signer.address)
 
-    // While this works, it's probably not for the reason you think :)
+    // If this works, it's probably for the reason you think :)
     sibyl.once(filter, (event) => {
         const requestId = event.args[0]
-        console.log("Request ID:")
-        console.log(requestId)
-                
-        const filter2 = sibyl.filters.QueryCompleted(requestId)
 
-        sibyl.getQueryStatus(requestId).then((status) => {
-            console.log("status")
-            console.log(status)
-            if (Number(status) === 1) {
-                console.log("reading straight away")
-                sibyl.readResponse(requestId).then((queryResult) => {
-                    console.log("queryResult")
-                    console.log(queryResult)
-                    setQueryResponse(queryResult[responseType])
-                })
-            }
-        })
-        
-        sibyl.once(filter2, (_response) => {
-            sibyl.readResponse(requestId).then((queryResult) => {
-                console.log("queryResult")
-                console.log(queryResult)
-                setQueryResponse(queryResult[responseType])
-            })
-        })
+        hardCheck(sibyl, requestId, responseType, setQueryResponse)
+
+        // sibyl.once(filter2, (_response) => {
+        //     sibyl.readResponse(requestId).then((queryResult) => {
+        //         console.log("queryResult")
+        //         console.log(queryResult)
+        //         setQueryResponse(queryResult[responseType])
+        //     })
+        // })
+
+
+        // console.log("Request ID:")
+        // console.log(requestId)
+                
+        // const filter2 = sibyl.filters.QueryCompleted(requestId)
+
+        // sibyl.getQueryStatus(requestId).then((status) => {
+        //     console.log("status")
+        //     console.log(status)
+        //     if (Number(status) === 1) {
+        //         console.log("reading straight away")
+        //         sibyl.readResponse(requestId).then((queryResult) => {
+        //             console.log("queryResult")
+        //             console.log(queryResult)
+        //             setQueryResponse(queryResult[responseType])
+        //         })
+        //     }
+        // })
+
     })
 
     return sibyl.query(question, responseType, options)
 }
+
+
+const hardCheck = (sibyl: any, requestId: any, responseType: any, setQueryResponse: any) => {
+    sibyl.readResponse(requestId).then((queryResult: any) => {
+        console.log("queryResult")
+        console.log(queryResult)
+        setQueryResponse(queryResult[responseType])
+    })
+    .catch((error: any) => {
+        console.log("error")
+        console.log(error)
+        setTimeout(() => hardCheck(sibyl, requestId, responseType, setQueryResponse), 1000)
+    })
+}
+
