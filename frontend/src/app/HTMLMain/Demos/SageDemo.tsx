@@ -1,3 +1,10 @@
+import DemoButton from "@/components/demo/DemoButton";
+import DemoResponse from "@/components/demo/DemoResponse";
+import DemoSeparator from "@/components/demo/DemoSeparator";
+import DemoTextArea from "@/components/demo/DemoTextArea";
+import { LabelInputContainer } from "@/components/ui/utils";
+import { Query, ResponseType } from "@/lib/sibyl";
+import { Label } from "@radix-ui/react-label";
 import { ethers } from "ethers";
 import { useState } from "react";
 
@@ -18,13 +25,37 @@ export default function SageDemo({ signer }: SageDemoProps) {
     const [queryResponse, setQueryResponse] = useState<string | undefined>()
     const [clause, setClause] = useState<string>("")
 
-    const demoHeader = "Event to be verified:"
+    const demoHeader = "Terms to evaluate:"
     
     const SageDemoRequest = () => {
-        const finalQuestion = "Will the following event happen? \n" + clause
+        const finalQuestion = "Which address should get the money? \n" + clause
+
+        const queryInfo = {
+            signer: signer,
+            question: finalQuestion,
+            responseType: ResponseType.STR,
+            setQueryResponse: setQueryResponse,
+        }
+        Query(queryInfo)
+
     }
     return (
-        <div>Forecast</div>
+        <div className="my-8">
+            <DemoSeparator/>
+
+            <LabelInputContainer className="mb-4">
+                <Label htmlFor="answer">{demoHeader}</Label>
+                <DemoTextArea placeholder="Your answer" setValue={setClause}/>
+            </LabelInputContainer>
+
+            <DemoButton onClick={SageDemoRequest}>
+                Evaluate this clause
+            </DemoButton>
+
+            <DemoSeparator/>
+            
+            <DemoResponse queryResponse={queryResponse?.toString()} introText="would give the money to:"/>
+        </div>
         )
     }
 
