@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { TextArea } from "@/components/ui/input"
+import { LabelInputContainer, BottomGradient } from "@/components/ui/utils"
 import { Query, QueryResponse, responseType } from "@/lib/sibyl"
-import { cn } from "@/lib/utils"
 import { Label } from "@radix-ui/react-label"
 import { ethers } from "ethers"
 import { useState } from "react"
@@ -12,10 +12,10 @@ Grading of subjective questions is hard to automate. By using a decentralized or
 The transparency provided by the Blockchain guarantees the integrity of the grading process, which a traditional "closed box" grading system cannot provide.
 
 Example of usecases:
-- Evaluation of public exams
-- Evaluation of exams in online courses
-- Evaluation of tests which should be impartial and unbiased (e.g. job applications)
-- Evaluating questions where the student and the teacher disagree on the grading
+- Evaluation of public exams.
+- Evaluation of exams in online courses.
+- Evaluation of tests which should be impartial and unbiased (e.g. job applications).
+- Evaluating questions where the student and the teacher disagree on the grading.
 */
 
 interface EducationDemoProps {
@@ -70,26 +70,3 @@ export default function EducationDemo({ signer }: EducationDemoProps) {
     )
 
 }
-
-const BottomGradient = () => {
-    return (
-        <>
-            <span className="group-hover/btn:opacity-100 block transition duration-500 opacity-0 absolute h-px w-full -bottom-px inset-x-0 bg-gradient-to-r from-transparent via-[hsl(var(--accent))] to-transparent" />
-            <span className="group-hover/btn:opacity-100 blur-sm block transition duration-500 opacity-0 absolute h-px w-1/2 mx-auto -bottom-px inset-x-10 bg-gradient-to-r from-transparent via-[hsl(var(--accent))] to-transparent" />
-        </>
-    );
-};
-
-const LabelInputContainer = ({
-    children,
-    className,
-}: {
-    children: React.ReactNode;
-    className?: string;
-}) => {
-    return (
-        <div className={cn("flex flex-col space-y-2 w-full", className)}>
-            {children}
-        </div>
-    );
-};
