@@ -3,13 +3,10 @@ import { DemoCountrySelector } from "@/components/demo/DemoCountrySelector";
 import DemoResponse from "@/components/demo/DemoResponse";
 import DemoSeparator from "@/components/demo/DemoSeparator";
 import DemoTextArea from "@/components/demo/DemoTextArea";
-import { Button } from "@/components/ui/button";
-import { TextArea } from "@/components/ui/input";
-import { BottomGradient, LabelInputContainer } from "@/components/ui/utils";
-import { Query, QueryResponse, ResponseType } from "@/lib/sibyl";
+import { Query, ResponseType } from "@/lib/sibyl";
 import { Label } from "@radix-ui/react-label";
 import { ethers } from "ethers";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 /*
 Explanation of use case:

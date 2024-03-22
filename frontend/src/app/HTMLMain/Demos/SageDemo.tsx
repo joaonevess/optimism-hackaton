@@ -10,7 +10,7 @@ import { useState } from "react";
 
 /*
 Explanation of use case: 
-We can only evaluate contracts with information that is already integrated into the blockchain. By using a decentralized AI oracle, we can have a contract be resolved through the AI's output. This could include both objective (but not integrated into the blockchain) information and subjective information. This is even more powerful for contracts that require information only available in the future.
+Traditionally, we can only evaluate contracts with information that is already integrated into the blockchain. By using a decentralized AI oracle, we can have a contract be resolved through the AI's output. This could include both objective (but not integrated into the blockchain) information and subjective information. This is even more powerful for contracts that require information only available in the future.
 
 Example of usecases:
 - Judging clauses related to events that have no oracle yet (e.g. "Will the rains in Greece be above average next year?")
