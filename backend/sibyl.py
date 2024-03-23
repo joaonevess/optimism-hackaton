@@ -11,20 +11,21 @@ load_dotenv()
 async def setup():
     with open("./abi/Sibyl.json", "r") as abi_file:
         abi = json.load(abi_file)["abi"]
-    with open("./abi/SibylDeployment.json", "r") as deployment_file:
-        deployment_info = json.load(deployment_file)
 
-    contract_deployer_address = deployment_info["deployer"]
-    contract_address = deployment_info["deployedTo"]
+    owner_address = os.getenv("SIBYL_CONTRACT_OWNER_ADDRESS")
+    assert owner_address, "Contract owner address not set in .env file"
 
-    # contract_address = w3.to_checksum_address(contract_address) unsure what this is about so keeping it here
+    contract_address = os.getenv("SIBYL_CONTRACT_ADDRESS")
+    assert contract_address, "Sibyl contract address not set in .env file"
 
-    w3 = AsyncWeb3(AsyncWeb3.AsyncHTTPProvider("http://127.0.0.1:8545"))
-    w3.eth.default_account = contract_deployer_address
+    rpc_data_provider = os.getenv("OPTIMISM_RPC_URL")
+    assert rpc_data_provider, "Optimism RPC URL not set in .env file"
+
+    w3 = AsyncWeb3(AsyncWeb3.AsyncHTTPProvider(rpc_data_provider))
+    w3.eth.default_account = owner_address
     assert await w3.is_connected(), "Web3 connection failed"
 
-    # Define the smart contract address and ABI
-
+    # Set the smart contract address and ABI
     contract = w3.eth.contract(address=contract_address, abi=abi)
     return contract
 
@@ -79,7 +80,6 @@ async def handle_events(sibyl, async_callback):
     )
 
     # Start listening for events
-    # TODO improve this
     while True:
         for event in await event_filter.get_new_entries():
             print(f"New event received: {event.args}")
