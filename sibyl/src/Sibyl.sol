@@ -132,10 +132,10 @@ contract Sibyl is AccessControl, Pausable {
 
     // Admin functionality
     address payable public adminAddress;
-    constructor() {
-        _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
-        _grantRole(DATA_PROVIDER_ROLE, msg.sender);
-        adminAddress = payable(msg.sender);
+    constructor(address _adminAddress) {
+        _grantRole(DEFAULT_ADMIN_ROLE, _adminAddress);
+        _grantRole(DATA_PROVIDER_ROLE, _adminAddress);
+        adminAddress = payable(_adminAddress);
         pricePerInputChar = 0.00001 ether; // todo set a reasonable price per char
     }
 
