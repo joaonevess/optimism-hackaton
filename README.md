@@ -22,7 +22,8 @@ cp backend/.env.example backend/.env
 Run `docker-compose up` at the root project directory to easily start the backend and frontend services.
 You can access the frontend at `http://localhost:3000`.
 
-To facilitate judging, the contract has been deployed to the Optimism Sepolia Testnet at the address. Lucas (address: 0x7824A63A4051eB44723AAae83398c847e51187FA) has ownership, complete access control management capabilities, and was assigned the AI Data Provider role. For any necessary redeployments, use the forge tool from Foundry.
+To facilitate judging, the contract has been deployed to the Optimism Sepolia Testnet at the address `0xD0ffEB7cA7d484Ff3E4D0D1349a7773939d1cfb1`. Lucas (address: `0x7824A63A4051eB44723AAae83398c847e51187FA`) has ownership, complete access control management capabilities, and was assigned the AI Data Provider role. For any necessary redeployments, use the forge tool from Foundry.
+
 
 ```bash
 forge create --rpc-url $OPTIMISM_SEPOLIA_RPC_URL --private-key 0x1234567890123456789012345678901234567890 src/Sibyl.sol:Sibyl
